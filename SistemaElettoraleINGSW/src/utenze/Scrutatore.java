@@ -18,9 +18,9 @@ public final class Scrutatore {
 	 * <p>
 	 * La sua creazione è subordinata dal passaggio come parametro
 	 * di un Utente che non sia nullo e che sia di tipologia
-	 * {@link utenze.Utente.tipoUtente}.
+	 * {@code Scrutatore} [{@link utenze.Utente.tipoUtente}].
 	 * 
-	 * @param utenza
+	 * @param utenza utenza a cui è associato lo scrutatore restituito
 	 */
 	public Scrutatore(Utente utenza) {
 		if (utenza == null)
@@ -33,8 +33,6 @@ public final class Scrutatore {
 	/**
 	 * Lo scrutatore vuole istanziare una nuova sessione di Voto
 	 * 
-	 * @parama ....
-	 * @return ....
 	 */
 	
 	public void newVoteSession (/*@parama*/) {
@@ -52,9 +50,9 @@ public final class Scrutatore {
 	/**
 	 * Indica se l'utente/scrutatore può avviare la fase di scrutinio (Ballot)
 	 * 
-	 * @parama Scrutinio ballot per il quale si vuole sapere se la sessione è già attiva o no.
 	 * @return {@code true} se la sessione può essere avviata, ossia attualmente inattiva.
 	 */
+	//@parama Scrutinio ballot per il quale si vuole sapere se la sessione è già attiva o no.
 	public boolean canStartABallot (/*Scrutinio ballot*/) {
 		
 		/*

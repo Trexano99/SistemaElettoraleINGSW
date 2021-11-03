@@ -92,8 +92,16 @@ public class Utente {
 	 * Enumeratore che elenca le tipologie di utenti possibili
 	 */
 	static public enum tipoUtente {
-			Elettore,
-			Scrutatore
+		/**
+		 * Rappresenta la tipologia di Utente elettore, rifetito 
+		 * alla classe esistente {@link utenze.Elettore}
+		 */
+		Elettore,
+		/**
+		 * Rappresenta la tipologia di Utente scrutatore, rifetito 
+		 * alla classe esistente {@link utenze.Scrutatore}
+		 */
+		Scrutatore
 	}
 	
 }

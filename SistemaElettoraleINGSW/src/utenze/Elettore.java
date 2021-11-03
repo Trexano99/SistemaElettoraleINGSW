@@ -20,9 +20,9 @@ public final class Elettore {
 	 * <p>
 	 * La sua creazione è subordinata dal passaggio come parametro
 	 * di un Utente che non sia nullo e che sia di tipologia
-	 * {@link utenze.Utente.tipoUtente}.
+	 * {@code Elettore} [{@link utenze.Utente.tipoUtente}].
 	 * 
-	 * @param utenza
+	 * @param utenza utenza a cui è associato l'elettore restituito
 	 */
 	public Elettore(Utente utenza) {
 		if (utenza == null)
@@ -32,12 +32,13 @@ public final class Elettore {
 		this.utenza = utenza;
 	}
 	
+	
 	/**
 	 * Indica se l'utente può votare per una determinata elezione
 	 * 
-	 * @parama elezione elezione per cui si vuole sapere se l'utente può votare
 	 * @return {@code true} se l'utente può votare. 
 	 */
+	// @parama elezione elezione per cui si vuole sapere se l'utente può votare
 	public boolean canVote (/*Elezione elezione*/) {
 		
 		/*
@@ -51,9 +52,9 @@ public final class Elettore {
 	/**
 	 * Indica se l'utente ha già votato per una determinata elezione
 	 * 
-	 * @parama elezione elezione per cui si vuole sapere se l'utente ha già votato
 	 * @return {@code true} se l'utente ha già votato per la stessa. 
 	 */
+	 // @parama elezione elezione per cui si vuole sapere se l'utente ha già votato
 	public boolean hasAlreadyVoted (/*Elezione elezione*/) {
 		
 		/*
