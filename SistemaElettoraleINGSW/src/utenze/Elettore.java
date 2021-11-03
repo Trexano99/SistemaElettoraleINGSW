@@ -10,6 +10,8 @@ import utenze.Utente.tipoUtente;
  */
 public final class Elettore {
 
+	//resta una cosa separata con il suo scopo unico quale comunicazione del DB.
+	//In altri casi ha poco senso avere come suoi attributi (vedi implementazione astratta) delle cose relative alla comunicazione con il DB.
 	Utente utenza;
 	
 	/**
@@ -55,7 +57,7 @@ public final class Elettore {
 	public boolean hasAlreadyVoted (/*Elezione elezione*/) {
 		
 		/*
-		 * Query per richiedere se l'utente può votare al Database.
+		 * Query per richiedere se l'utente ha già votato al Database.
 		 * 
 		 * Return della risposta. 
 		 * */
