@@ -47,6 +47,7 @@ public final class Elettore {
 
 
 	public String getComune() {
+		//checkComune(elettore);
 		return comune;
 	}
 
@@ -104,6 +105,7 @@ public final class Elettore {
 
 
 	public void setVoto(Boolean voto) {
+		hasAlreadyVoted(voto);
 		this.voto = voto;
 	}
 	//JLM ------------------------------------------------------------------------------------------
@@ -161,6 +163,37 @@ public final class Elettore {
 			
 			return eta;
 		}
+		
+		/**
+		 * Indica se l'utente ha già votato per una determinata elezione
+		 * 
+		 * @return {@code false} se l'utente non ha ancora votato per la stessa, quindi può votare. 
+		 */
+		 // @parama elezione elezione per cui si vuole sapere se l'utente ha già votato
+		private boolean hasAlreadyVoted (boolean voto /*, Votazione elezione*/) {
+			if(esprimi_voto(voto /*,elezione*/))
+				throw new IllegalArgumentException("L'utente ha già votato per questa elezione");
+			return false;
+		}
+		
+		private boolean checkComune(Elettore elettore){
+				if(elettore.nazione == "Italia") {
+					if (elettore.comune == null) {
+						throw new IllegalArgumentException("Il comune non può essere null, se la nazione corrisponde a Italia");
+					}
+				}
+			return true; 
+		}
+		
+		private boolean checkData(Elettore elettore){
+			//libreria per prendere dataOdierna
+			
+			/*if(elettore.dataNascita > dataOdierna) {
+				throw new IllegalArgumentException("La data inserita deve essere valida");
+			}*/
+		return true; 
+	}
+		
 
 //--------------------------------------------------------------------------------------------------
 	//resta una cosa separata con il suo scopo unico quale comunicazione del DB.
@@ -184,8 +217,25 @@ public final class Elettore {
 			throw new IllegalArgumentException("L'utenza passata non è un elettore");
 		this.utenza = utenza;
 	}
+	//METODI --------------------------------------------------------------------------------------
+	/**
+	 * Indica se l'utente ha già espresso il per una determinata elezione
+	 * 
+	 * @return {@code true} se l'utente ha già votato, {@code false} se l'utente ha ancora votato votato. 
+	 */
+	public boolean esprimi_voto(boolean voto /*, Votazione elezione*/) {
+		/*
+		 * Query per richiedere se l'utente ha già votato al Database.
+		 * 
+		 * Return della risposta. 
+		 * */
+		if(/*elezione &&*/ voto) { //se elezione scelta = true e voto = true -> voto per quell'elezione già espresso
+			return true;
+		}
+		return false;
+	}
 	
-	//METODI ----------------------------------------------------------------------------------------
+	//METODI VECCHI----------------------------------------------------------------------------------------
 	/**
 	 * Indica se l'utente può votare per una determinata elezione
 	 * 
@@ -196,22 +246,6 @@ public final class Elettore {
 		
 		/*
 		 * Query per richiedere se l'utente può votare al Database.
-		 * 
-		 * Return della risposta. 
-		 * */
-		return false;
-	}
-	
-	/**
-	 * Indica se l'utente ha già votato per una determinata elezione
-	 * 
-	 * @return {@code true} se l'utente ha già votato per la stessa. 
-	 */
-	 // @parama elezione elezione per cui si vuole sapere se l'utente ha già votato
-	public boolean hasAlreadyVoted (/*Elezione elezione*/) {
-		
-		/*
-		 * Query per richiedere se l'utente ha già votato al Database.
 		 * 
 		 * Return della risposta. 
 		 * */
