@@ -36,7 +36,7 @@ public abstract class CodiceFiscale {
 		codiceFinale.add(calcoloCarattereControllo(codiceFinale));
 		return listToCharArray(codiceFinale);
 	}
-	
+	//@return (\forall int i; i>= 0 && i< list.length;  \result = (char)list.get(i));
 	private static char[] listToCharArray (ArrayList<Character> list){
 		char[] myCharArray = new char[list.size()];
 		for(int i = 0; i < list.size(); i++)
@@ -67,8 +67,14 @@ public abstract class CodiceFiscale {
 		return risultato; 
 	}
 	/*@
-	 @requires ( (mount>0) && (mount<13) );
-	 @
+	 @requires  ((month<6&& \result == (char)('A'+(month-1)) &&
+	 @		(month=6 && \result == 'H') &&
+	 @		(month=7 && \result == 'L') &&
+	 @		(month=8 && \result == 'M') &&
+	 @		(month=9 && \result == 'P') &&
+	 @		(month=10 && \result == 'R') &&
+	 @		(month=11 && \result == 'S') &&
+	 @		(month=7 && \result == 'T') );
 	 @*/
 	private static char monthToCFLetter(int month) {
 		if(month<6)
@@ -86,7 +92,9 @@ public abstract class CodiceFiscale {
 	}
 	/*@
 	 @requires ( (day>0) && (day<32) );
-	 @
+	 @requires (!isMale ==> day = \old(day)+40 );
+	 @requires (day>0 &&day<10) ==> \result char(0).add(Integer.toString(day).charAt(0)) &&
+	 @          ( (day>9) && \result = (Integer.toString(day).charAt(0)+Integer.toString(day).charAt(1)) ;
 	 @*/
 	private static ArrayList<Character> dayToCFLetters (int day, boolean isMale) {
 		ArrayList<Character> lettere = new ArrayList<Character>(2);
@@ -101,7 +109,7 @@ public abstract class CodiceFiscale {
 		}
 		return lettere;
 	}
-
+	//@ensures (\forall int i; i>= 0 && i< str.length(); \result = str.toCharArray()));
 	private static ArrayList<Character> convertStringToCharList(String str)
     {
         ArrayList<Character> chars = new ArrayList<>();
