@@ -14,13 +14,13 @@ public class TestingClass {
 				"Mario",
 				"Bianchi",
 				nascita2,
-				Nazione.getNazioneFromName("UgAnda"),
+				Nazione.getNazioneFromName("Uganda"),
 				true);
 		elettoreStraniero.esprimi_voto();
 		System.out.println(elettoreItaliano.getCodiceFiscale());
 		System.out.println(elettoreStraniero.getCodiceFiscale());
 		//Elettore giusto------------------------------------------------------------
-		int[] data = {5,5,1998};
+		//int[] data = {5,5,1998};
 		//Elettore prova = assignment.Elettore.foreignElettore("Shanti","Ayala", data, "Svizzera",false); 
 		//System.out.println(prova.toString());
 		//Elettore nome nullo--------------------------------------------------------
