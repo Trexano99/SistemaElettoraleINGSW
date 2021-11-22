@@ -29,16 +29,19 @@ import org.json.JSONObject;
  *
  */
 public class ComuneItaliano {
+	
 	private static String fileComuni = ".//FileJson//comuniItaliani.json";
 	
 	/**
 	 * Il nome del comune
 	 */
+	//@public invariant Nome!= null;
 	public final String Nome;
 	/**
 	 * Il codice catastale del comune. Utile ad esempio per 
 	 * la generazione del codice fiscale.
 	 */
+	//@public invariant CodiceCatastale!= null;
 	public final String CodiceCatastale;
 	
 	/*Instanziato come privato per rendere possibile la generazione

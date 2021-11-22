@@ -34,10 +34,12 @@ public class Nazione {
 	/**
 	 * Nome della nazione
 	 */
+	//@public invariant Nome!= null;
 	public final String Nome ;
 	/**
 	 * Codice della nazione
 	 */
+	//@public invariant CounttyCode!= null;
 	public final String CountryCode;
 	
 	/*Instanziato come privato per rendere possibile la generazione

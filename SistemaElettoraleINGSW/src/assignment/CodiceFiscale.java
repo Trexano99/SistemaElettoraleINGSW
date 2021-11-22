@@ -1,8 +1,8 @@
 package assignment;
 
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Arrays;
+//import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 
 /**
  * Questa classe astratta mette a disposizione un metodo statico per 
@@ -23,9 +23,12 @@ public abstract class CodiceFiscale {
 		ArrayList<Character> codiceFinale = new ArrayList<Character>();
 		codiceFinale.addAll(getWordForCF(elettore.Cognome, false));
 		codiceFinale.addAll(getWordForCF(elettore.Nome.split(",")[0], true));
-		codiceFinale.addAll(convertStringToCharList(elettore.DataNascita.format(DateTimeFormatter.ofPattern("yy"))));
-		codiceFinale.add(monthToCFLetter(elettore.DataNascita.getMonthValue()));
-		codiceFinale.addAll(dayToCFLetters(elettore.DataNascita.getDayOfMonth(),elettore.IsMale));
+		//codiceFinale.addAll(convertStringToCharList(elettore.DataNascita.format(DateTimeFormatter.ofPattern("yy"))));
+		codiceFinale.addAll(convertStringToCharList(String.valueOf(elettore.DataNascita[2])));
+		//codiceFinale.add(monthToCFLetter(elettore.DataNascita.getMonthValue()));
+		codiceFinale.add(monthToCFLetter(elettore.DataNascita[1]));
+		//codiceFinale.addAll(dayToCFLetters(elettore.DataNascita.getDayOfMonth(),elettore.IsMale));
+		codiceFinale.addAll(dayToCFLetters(elettore.DataNascita[0],elettore.IsMale));
 		if(elettore.ComuneNascita!=null)
 			codiceFinale.addAll(convertStringToCharList(elettore.ComuneNascita.CodiceCatastale));
 		else
@@ -63,7 +66,10 @@ public abstract class CodiceFiscale {
 		}while(risultato.size()<3);
 		return risultato; 
 	}
-	
+	/*@
+	 @requires ( (mount>0) && (mount<13) );
+	 @
+	 @*/
 	private static char monthToCFLetter(int month) {
 		if(month<6)
 			return (char)('A'+(month-1));
@@ -78,7 +84,10 @@ public abstract class CodiceFiscale {
 		default: throw new IllegalArgumentException("month not expected");
 		}
 	}
-	
+	/*@
+	 @requires ( (day>0) && (day<32) );
+	 @
+	 @*/
 	private static ArrayList<Character> dayToCFLetters (int day, boolean isMale) {
 		ArrayList<Character> lettere = new ArrayList<Character>(2);
 		if(!isMale)
