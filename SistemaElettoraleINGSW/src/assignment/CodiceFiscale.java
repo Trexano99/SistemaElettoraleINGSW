@@ -29,7 +29,7 @@ public abstract class CodiceFiscale {
 		if(elettore.ComuneNascita!=null)
 			codiceFinale.addAll(convertStringToCharList(elettore.ComuneNascita.CodiceCatastale));
 		else
-			codiceFinale.addAll(convertStringToCharList("Z"+elettore.NazioneNascita.CountryCode));
+			codiceFinale.addAll(convertStringToCharList(elettore.NazioneNascita.CountryCode));
 		codiceFinale.add(calcoloCarattereControllo(codiceFinale));
 		return listToCharArray(codiceFinale);
 	}
