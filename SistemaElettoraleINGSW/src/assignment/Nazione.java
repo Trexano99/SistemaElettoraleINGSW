@@ -3,13 +3,15 @@ package assignment;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 
 /**
  * Questa classe rappresenta una Nazione nel mondo.
@@ -27,6 +29,7 @@ import org.json.simple.parser.JSONParser;
  *
  */
 public class Nazione {
+	private static String fileNazione = ".//FileJson//nazioniMondo.json";
 
 	/**
 	 * Nome della nazione
@@ -70,32 +73,28 @@ public class Nazione {
 	private static List<Nazione> uploadAllNazioni() {
 		List<Nazione> listaFinale = new ArrayList<Nazione>();
 		
-		JSONParser jsonParser = new JSONParser();
-         
-	        try (FileReader reader = new FileReader("C:\\Users\\visco\\git\\SistemaElettoraleINGSW\\SistemaElettoraleINGSW\\src\\assignment\\nazioniMondo.json"))
-	        {
-	            Object obj = jsonParser.parse(reader);
-	 
-	            JSONArray nazioniList = (JSONArray) obj;
-
-	            nazioniList.forEach( nazione -> listaFinale.add(parseNazioneObject( (JSONObject) nazione)) );
-	 
-	        } catch (FileNotFoundException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } catch (org.json.simple.parser.ParseException e) {
-				e.printStackTrace();
-			}
+		String fullContent;
+        
+		try {
+			fullContent = new String(Files.readAllBytes( Paths.get(fileNazione)));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+        
+        JSONArray nazioniList = new JSONArray(fullContent);
+        for(int i = 0; i<nazioniList.length();i++)
+        	listaFinale.add(parseNazioneObject((JSONObject)nazioniList.get(i)));
+        
 	        
 	   return listaFinale;
 	}
 	
 	private static Nazione parseNazioneObject(JSONObject nazione) 
     {
-		if(nazione.get("italian_country_code")==null)
-			return new Nazione((String) nazione.get("english_country_name"), null);   
-        return new Nazione((String) nazione.get("english_country_name"), (String) nazione.get("italian_country_code"));   
+		if(nazione.optString("italian_country_code").isBlank())
+			return new Nazione((String) nazione.optString("english_country_name"), null); 
+        return new Nazione((String) nazione.optString("english_country_name"), (String) nazione.get("italian_country_code"));   
     }
 	
 	/**

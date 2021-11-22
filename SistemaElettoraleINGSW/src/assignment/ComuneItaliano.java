@@ -3,12 +3,15 @@ package assignment;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+
 
 /**
  * Questa classe rappresenta un comune Italiano.
@@ -26,6 +29,8 @@ import org.json.simple.parser.JSONParser;
  *
  */
 public class ComuneItaliano {
+	private static String fileComuni = ".//FileJson//comuniItaliani.json";
+	
 	/**
 	 * Il nome del comune
 	 */
@@ -57,24 +62,19 @@ public class ComuneItaliano {
 	@SuppressWarnings("unchecked")
 	private static List<ComuneItaliano> uploadAllComuni() {
 		List<ComuneItaliano> listaFinale = new ArrayList<ComuneItaliano>();
-		
-		JSONParser jsonParser = new JSONParser();
-         
-	        try (FileReader reader = new FileReader("C:\\Users\\visco\\git\\SistemaElettoraleINGSW\\SistemaElettoraleINGSW\\src\\assignment\\comuniItaliani.json"))
-	        {
-	            Object obj = jsonParser.parse(reader);
-	 
-	            JSONArray comuniList = (JSONArray) obj;
-
-	            comuniList.forEach( comune -> listaFinale.add(parseComuneObject( (JSONObject) comune )) );
-	 
-	        } catch (FileNotFoundException e) {
-	            e.printStackTrace();
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        } catch (org.json.simple.parser.ParseException e) {
-				e.printStackTrace();
-			}
+        String fullContent;
+        
+		try {
+			fullContent = new String(Files.readAllBytes( Paths.get(fileComuni)));
+		} catch (IOException e) {
+			e.printStackTrace();
+			return null;
+		}
+        
+        JSONArray comuniList = new JSONArray(fullContent);
+        for(int i = 0; i<comuniList.length();i++)
+        	listaFinale.add(parseComuneObject((JSONObject)comuniList.get(i)));
+        
 	        
 	   return listaFinale;
 	}
