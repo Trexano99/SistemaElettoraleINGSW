@@ -1,6 +1,7 @@
 package assignment;
 
-//import java.time.LocalDate;
+import java.time.LocalDate;
+import java.time.Period;
 
 /**
 * Questa classe rappresenta un Elettore del sistema di voto.
@@ -14,8 +15,7 @@ public class Elettore {
 	  @*/
 	public final String Nome;
 	public final String Cognome;
-	//public final LocalDate DataNascita; 
-	public int[] DataNascita = new int [3]; //dn[0] = giorno, dn[1] = mese, dn[2] = anno
+	public final LocalDate DataNascita;
 	public final ComuneItaliano ComuneNascita;
 	public final Nazione NazioneNascita;
 	/**
@@ -27,7 +27,6 @@ public class Elettore {
 	private char[] codiceFiscale = null;
 	private /*@ spec_public @*/ boolean asVoted = false;
 	
-	private int[] dataOdierna = {23,11,2021};
 	
 	/**
 	 * Ritorna il codice fiscale calcolato dell'elettore
@@ -50,10 +49,9 @@ public class Elettore {
 	
 	//@requires DataNascita != null;
 	private boolean canVote(){
-		/*LocalDate firstDate = DataNascita;
+		LocalDate firstDate = DataNascita;
 		LocalDate secondDate = LocalDate.now();
-		return Period.between(firstDate, secondDate).getYears()>18;*/
-		return true; //if Elettore e' maggiorenne;
+		return Period.between(firstDate, secondDate).getYears()>18;
 	}
 	
 	
@@ -63,14 +61,13 @@ public class Elettore {
 	 @requires comuneNascita != null;
 	 @requires nazioneNascita != null;
 	 @*/
-	private Elettore(String nome, String cognome, int[] dataNascita, ComuneItaliano comuneNascita, Nazione nazioneNascita,
+	private Elettore(String nome, String cognome, LocalDate dataNascita, ComuneItaliano comuneNascita, Nazione nazioneNascita,
 			boolean isMale) {
-		if(/*nome.isBlank()*/isBlank(nome))
+		if(nome.isBlank())
 			throw new IllegalArgumentException("Il nome non può essere vuoto o nullo");
-		if(/*cognome.isBlank()*/isBlank(cognome))
+		if(cognome.isBlank())
 			throw new IllegalArgumentException("Il cognome non può essere vuoto o nullo");
-		//if(dataNascita.isAfter(LocalDate.now()))
-		if(isAfter(dataNascita,dataOdierna))
+		if(dataNascita.isAfter(LocalDate.now()))
 			throw new IllegalArgumentException("La data di nascita non può essere successiva alla data attuale");
 		if(nazioneNascita.equals(Nazione.NazioneIta)&&comuneNascita==null)
 			throw new IllegalArgumentException("Il comune di nascita non può essere nullo se la nazione è Italiana");
@@ -82,23 +79,6 @@ public class Elettore {
 		IsMale = isMale;
 		generateCodiceFiscale();
 	}
-	
-	//metodo messo perchè non esiste in java7
-		private boolean isBlank(String string) {
-		    return  string.trim().isEmpty();
-		}
-		//@requires dataNascita!= null;
-		//@requires dataNascita.length==dataOdiera.length;
-		private boolean isAfter(int[] dataNascita, int[] dataOdierna){
-			if(dataNascita[2]>dataOdierna[2])
-				return true;
-			else if(dataNascita[2]==dataOdierna[2])
-				if(dataNascita[1]>dataOdierna[1])
-					return true;
-					else if (dataNascita[1]==dataOdierna[1] && dataNascita[0]>dataOdierna[0])
-						return true;
-			return false;
-		}
 	
 	/**
 	 * Permette di ottenere un'istanza di Elettore straniero
@@ -112,7 +92,7 @@ public class Elettore {
 	 */
 	//@requires !nazioneNascita.equals(Nazione.NazioneIta);
 	//@ensures comuneNascita ==null;	
-	public static Elettore foreignElettore(String nome, String cognome, int[] dataNascita, Nazione nazioneNascita,boolean isMale) {
+	public static Elettore foreignElettore(String nome, String cognome, LocalDate dataNascita, Nazione nazioneNascita,boolean isMale) {
 		return new Elettore(nome, cognome, dataNascita, null, nazioneNascita, isMale);
 	}
 	
@@ -128,7 +108,7 @@ public class Elettore {
 	 */
 	//@requires comune!=null;
 	//@ensures nazioneNascita.equals(Nazione.NazioneIta);
-	public static Elettore italianElettore(String nome, String cognome, int[] dataNascita, ComuneItaliano comune,boolean isMale) {
+	public static Elettore italianElettore(String nome, String cognome, LocalDate dataNascita, ComuneItaliano comune,boolean isMale) {
 		return new Elettore(nome, cognome, dataNascita, comune, Nazione.NazioneIta, isMale);
 	}
 	
@@ -154,19 +134,6 @@ public class Elettore {
 			throw new IllegalStateException("Un elettore non può votare se minorenne");
 	}
 	
-	public String toString() {
-		   String s = "nome=" + Nome + "; ";
-		   s = s + "cognome=" + Cognome + "; ";
-		   s = s + "datanascita=" + DataNascita[0]+"/"+ DataNascita[1]+"/" +DataNascita[2] + "; ";
-		   s = s + "comune=" + ComuneNascita + "; ";
-		   s = s + "nazione=" + NazioneNascita + "; ";
-		   if(IsMale){
-			   s = s + "sesso=" + "Maschio" + "; ";
-		   }else{
-			   s = s + "sesso=" + "Femmina" + "; ";
-		   }
-		   return s;
-		}
 }
 
 

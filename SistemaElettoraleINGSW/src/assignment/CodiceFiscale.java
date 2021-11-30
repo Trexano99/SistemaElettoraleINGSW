@@ -1,6 +1,6 @@
 package assignment;
 
-//import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 
@@ -23,12 +23,9 @@ public abstract class CodiceFiscale {
 		ArrayList<Character> codiceFinale = new ArrayList<Character>();
 		codiceFinale.addAll(getWordForCF(elettore.Cognome, false));
 		codiceFinale.addAll(getWordForCF(elettore.Nome.split(",")[0], true));
-		//codiceFinale.addAll(convertStringToCharList(elettore.DataNascita.format(DateTimeFormatter.ofPattern("yy"))));
-		codiceFinale.addAll(convertStringToCharList(String.valueOf(elettore.DataNascita[2])));
-		//codiceFinale.add(monthToCFLetter(elettore.DataNascita.getMonthValue()));
-		codiceFinale.add(monthToCFLetter(elettore.DataNascita[1]));
-		//codiceFinale.addAll(dayToCFLetters(elettore.DataNascita.getDayOfMonth(),elettore.IsMale));
-		codiceFinale.addAll(dayToCFLetters(elettore.DataNascita[0],elettore.IsMale));
+		codiceFinale.addAll(convertStringToCharList(elettore.DataNascita.format(DateTimeFormatter.ofPattern("yy"))));
+		codiceFinale.add(monthToCFLetter(elettore.DataNascita.getMonthValue()));
+		codiceFinale.addAll(dayToCFLetters(elettore.DataNascita.getDayOfMonth(),elettore.IsMale));
 		if(elettore.ComuneNascita!=null)
 			codiceFinale.addAll(convertStringToCharList(elettore.ComuneNascita.CodiceCatastale));
 		else
