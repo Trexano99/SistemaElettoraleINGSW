@@ -7,11 +7,20 @@ import com.mysql.cj.exceptions.FeatureNotAvailableException;
 import SEModels.LogInMapper;
 import ViewElements.LogInView;
 
-/*
+
+/**
+ * Questa classe mette a disposizione le funzionalità richiamabili durante la fase di login
  * 
+ * @author Massimiliano Visconti
+ *
  */
 public class LogInController {
 
+	/**
+	 * Enumeratore estendibile nel caso di nuove figure che si vuole inserire
+	 * @author Massimiliano Visconti
+	 *
+	 */
 	enum LogInType {
 		  Elettore,
 		  Impiegato

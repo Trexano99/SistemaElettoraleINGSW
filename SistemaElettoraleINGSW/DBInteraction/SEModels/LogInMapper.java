@@ -5,6 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Questo mapper mette a disposizione le query lato DB per i LogIn possibili.
+ * @author Massimiliano Visconti
+ *
+ */
 public class LogInMapper {
 
 	/*public static void addNewElettore(
@@ -42,8 +47,8 @@ public class LogInMapper {
 	 * 
 	 * @param username		Username dell'elettore del quale fare il login
 	 * @param password 		Password dell'elettore del quale fare il login
-	 * @return				{@value true} se il login è avvenuto con successo, 
-	 * {@value false} altrimenti
+	 * @return				{@code true} se il login è avvenuto con successo, 
+	 * {@code false} altrimenti
 	 * @throws SQLException	Nel caso di errori d'accesso al DB
 	 */
 	public static boolean loginElettore(
@@ -60,8 +65,8 @@ public class LogInMapper {
 	 * 
 	 * @param username		Username dell'impiegato del quale fare il login
 	 * @param password 		Password dell'impiegato del quale fare il login
-	 * @return				{@value true} se il login è avvenuto con successo, 
-	 * {@value false} altrimenti
+	 * @return				{@code true} se il login è avvenuto con successo, 
+	 * {@code false} altrimenti
 	 * @throws SQLException	Nel caso di errori d'accesso al DB
 	 */
 	public static boolean loginImpiegato(

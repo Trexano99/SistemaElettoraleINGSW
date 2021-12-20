@@ -2,6 +2,7 @@ package ViewElements;
 
 public class LogInView {
 
+
 	public LogInView() {
 		//Inizializzazione componenti
 

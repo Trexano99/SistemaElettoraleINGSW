@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"SEModels","l":"DBConnector"},{"p":"Controllers","l":"LogInController"},{"p":"SEModels","l":"LogInMapper"},{"p":"Controllers","l":"LogInController.LogInType"},{"p":"ViewElements","l":"LogInView"},{"p":"<Unnamed>","l":"MainTest"}];updateSearchResults();
