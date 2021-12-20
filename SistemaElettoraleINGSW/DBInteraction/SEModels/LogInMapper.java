@@ -37,15 +37,33 @@ public class LogInMapper {
 	
 	}*/
 	
+	/**
+	 * Permette di eseguire il login da elettore
+	 * 
+	 * @param username		Username dell'elettore del quale fare il login
+	 * @param password 		Password dell'elettore del quale fare il login
+	 * @return				{@value true} se il login è avvenuto con successo, 
+	 * {@value false} altrimenti
+	 * @throws SQLException	Nel caso di errori d'accesso al DB
+	 */
 	public static boolean loginElettore(
 		String username, 
 		String password
 		) throws SQLException {
 	
-	return baseLogin("SELECT sistemaelettoraleingsw.loginElettore(?, ?);",username, password);
+		return baseLogin("SELECT sistemaelettoraleingsw.loginElettore(?, ?);",username, password);
 	
 	}
 	
+	/**
+	 * Permette di eseguire il login da Impiegato
+	 * 
+	 * @param username		Username dell'impiegato del quale fare il login
+	 * @param password 		Password dell'impiegato del quale fare il login
+	 * @return				{@value true} se il login è avvenuto con successo, 
+	 * {@value false} altrimenti
+	 * @throws SQLException	Nel caso di errori d'accesso al DB
+	 */
 	public static boolean loginImpiegato(
 		String username, 
 		String password

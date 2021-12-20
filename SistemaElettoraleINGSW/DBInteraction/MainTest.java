@@ -9,7 +9,7 @@ public class MainTest {
 	public static void main(String[] args) throws ParseException, SQLException {
 		// TODO Auto-generated method stub
 
-		DBConnector.logIn();
+		DBConnector.openConnection();
 		
 		LogInView view = new LogInView();
 		

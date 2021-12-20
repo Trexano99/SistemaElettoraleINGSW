@@ -7,6 +7,9 @@ import com.mysql.cj.exceptions.FeatureNotAvailableException;
 import SEModels.LogInMapper;
 import ViewElements.LogInView;
 
+/*
+ * 
+ */
 public class LogInController {
 
 	enum LogInType {
@@ -14,11 +17,32 @@ public class LogInController {
 		  Impiegato
 		}
 		
-	//attemptElettoreLogin
+	/**
+	 * Permette di eseguire il login con le credenziali da Elettore nel sistema di voto.
+	 * Nel caso il LogIn avesse successo verrà invocata la funzione @see LogInView#confirmLogin()
+	 * altrimenti @see LogInView#denyLogin().
+	 * Nel caso di errori verrà invocata la funzione @see LogInView#signalError(String, String) 
+	 * con le specifiche dell'errore.
+	 * 
+	 * @param username 		CodiceFiscale elettore registrato
+	 * @param password		Password elettore registrato
+	 * @param logView		La view della login sulla quale verrà segnalato l'errore
+	 */
 	public void attemptElettoreLogin(String username, String password, LogInView logView) {
 		attemptGenericLogin (username, password, logView ,LogInType.Elettore);
 	}
 	
+	/**
+	 * Permette di eseguire il login con le credenziali da Impiegato nel sistema di voto.
+	 * Nel caso il LogIn avesse successo verrà invocata la funzione @see LogInView#confirmLogin()
+	 * altrimenti @see LogInView#denyLogin().
+	 * Nel caso di errori verrà invocata la funzione @see LogInView#signalError(String, String) 
+	 * con le specifiche dell'errore.
+	 * 
+	 * @param username 		Username impiegato registrato
+	 * @param password		Password impiegato registrato
+	 * @param logView		La view della login sulla quale verrà segnalato l'errore
+	 */
 	public void attemptImpiegatoLogin(String username, String password, LogInView logView) {
 		attemptGenericLogin (username, password, logView ,LogInType.Impiegato);
 	}
