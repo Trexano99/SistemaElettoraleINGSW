@@ -17,44 +17,11 @@ import javafx.stage.Stage;
 
 public class AutenticationFX extends Application{
 
-    @FXML
-    private Button btnLogin;
-
-    @FXML
-    private Label lblMessage;
-
-    @FXML
-    private TextField lblName;
-
-    @FXML
-    private TextField lblPassword;
-
-    @FXML
-    private Label paramName;
-
-    @FXML
-    private ToggleGroup typeUtente;
-
-    @FXML
-    void handleLogin(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handleName(ActionEvent event) {
-
-    }
-
-    @FXML
-    void handlePassword(ActionEvent event) {
-
-    }
-    
     @Override
 	public void start(Stage primaryStage) throws Exception {
     	Parent root = FXMLLoader.load(getClass().getResource("paginaAutenticazione.fxml"));
 		
-		Scene scene = new Scene(root, 400, 300);
+		Scene scene = new Scene(root, 600, 450);
 		primaryStage.setTitle("Sistema Elettorale");
 		primaryStage.setScene(scene);
 		primaryStage.show();
