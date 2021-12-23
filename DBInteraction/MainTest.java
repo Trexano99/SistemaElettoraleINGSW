@@ -19,5 +19,5 @@ public class MainTest {
 		
 		//ElettoreMapper.addNewElettore("VSCMSM", "Massimiliano", "Visconti", new java.sql.Date(df.parse("02-04-2015").getTime()), "ciao");
 	}
-
+	
 }

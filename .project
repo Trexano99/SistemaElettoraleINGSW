@@ -10,8 +10,21 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.m2e.core.maven2Builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
+		<nature>org.eclipse.m2e.core.maven2Nature</nature>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/autenticazione/paginaAutenticazione.fxml</name>
+			<type>1</type>
+			<locationURI>PARENT-1-WORKSPACE_LOC/OneDrive/Desktop/FXML%20file/paginaAutenticazione.fxml</locationURI>
+		</link>
+	</linkedResources>
 </projectDescription>
