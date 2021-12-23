@@ -58,6 +58,7 @@ public class Controller{
 
     @FXML
     void handleLogin(MouseEvent event) {
+    	boolean flag = true; 
     	String name = lblName.getText(); //da passare al db
     	String password = lblPassword.getText(); //da passare al db
     	System.out.println(name);
@@ -65,14 +66,21 @@ public class Controller{
     		message1.setText("Your credential is incorrect!");
     		message1.setVisible(true);
             message1.setTextFill(Color.rgb(210, 39, 30));
+            flag = false; 
     	}
     	if(!password.equals("da quello preso dal db")) {	
     		message2.setVisible(true);
     		message2.setText("Your password is incorrect!");
             message2.setTextFill(Color.rgb(210, 39, 30));
+            flag = false; 
     	}
-    	//se tutto va bene login ok 
-    	lblMessage.setText("valori inseriti: "+ name +" "+ password);//questo è da togliere
+    	if(flag) {
+    		//lblMessage.setText("valori inseriti: "+ name +" "+ password);
+    		lblMessage.setText("Benvenuto!");
+    		lblMessage.setTextFill(Color.rgb(21, 117, 84));
+    	} 
+    	
+    	
     }
 
     @FXML
