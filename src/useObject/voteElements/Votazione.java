@@ -1,5 +1,6 @@
 package useObject.voteElements;
 
+
 public abstract class Votazione {
 	
 	private int id;
@@ -8,6 +9,7 @@ public abstract class Votazione {
 	protected boolean isClosed;
 	protected boolean isFinished;
 	protected TipologiaElezione tipoElezione;
+	private Boolean hasLoggedElettoreVotedFor = null;
 	
 	protected Votazione(int id, String nome, boolean isClosed, boolean isFinished, TipologiaElezione tipoElezione) {
 		this.id = id;
@@ -39,6 +41,12 @@ public abstract class Votazione {
 	}
 	public TipologiaElezione getTipoElezione() {
 		return tipoElezione;
+	}
+	public Boolean getHasLoggedElettoreVotedFor() {
+		return hasLoggedElettoreVotedFor;
+	}
+	protected void setHasLoggedElettoreVotedFor(Boolean hasLoggedElettoreVotedFor) {
+		this.hasLoggedElettoreVotedFor = hasLoggedElettoreVotedFor;
 	}
 	
 	

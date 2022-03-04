@@ -5,6 +5,7 @@ import java.util.List;
 
 import daoModels.DbTablesRapresentation.Referendum_TB;
 import daoModels.ImplTablesDao.ReferendumDao;
+import daoModels.ImplTablesDao.VotazioneDao;
 
 public class Referendum extends Votazione {
 
@@ -29,15 +30,18 @@ public class Referendum extends Votazione {
 	static public List<Referendum> getAllReferendums(){
 		List<Referendum> tuttiRefer = new ArrayList<Referendum>();
 		List<Referendum_TB> listaRefer =  new ReferendumDao().getAllReferendums();
+		VotazioneDao vd = new VotazioneDao();
 		for (Referendum_TB referendum_TB : listaRefer) {
-			tuttiRefer.add(new Referendum(
+			Referendum nuovoR = new Referendum(
 					referendum_TB.getId(), 
 					referendum_TB.getNomeBreve(), 
 					referendum_TB.getIsClosed(), 
 					referendum_TB.getIsFinished(), 
 					referendum_TB.getTipoElezione(),
 					referendum_TB.getWithQuorum(),
-					referendum_TB.getQuesito()));
+					referendum_TB.getQuesito());
+			nuovoR.setHasLoggedElettoreVotedFor(vd.hasElettoreVotedForRef(nuovoR));
+			tuttiRefer.add(nuovoR);
 		}
 		return tuttiRefer;
 	}

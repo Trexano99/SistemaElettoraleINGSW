@@ -5,6 +5,7 @@ import java.util.List;
 
 import daoModels.DbTablesRapresentation.Elezione_TB;
 import daoModels.ImplTablesDao.ElezioneDao;
+import daoModels.ImplTablesDao.VotazioneDao;
 
 public class Elezione extends Votazione {
 	
@@ -23,14 +24,17 @@ public class Elezione extends Votazione {
 	public static List<Elezione> getAllElezioni(){
 		List<Elezione> tutteElez = new ArrayList<Elezione>();
 		List<Elezione_TB> listaElez =  new ElezioneDao().getAllElezioni();
+		VotazioneDao vd = new VotazioneDao();
 		for (Elezione_TB elezione_TB : listaElez) {
-			tutteElez.add(new Elezione(
+			Elezione nuova = new Elezione(
 					elezione_TB.getId(), 
 					elezione_TB.getNomeBreve(), 
 					elezione_TB.getIsClosed(), 
 					elezione_TB.getIsFinished(),
 					elezione_TB.getTipoElezione(), 
-					elezione_TB.getMaggioranzaAssoluta()));
+					elezione_TB.getMaggioranzaAssoluta());
+			nuova.setHasLoggedElettoreVotedFor(vd.hasElettoreVotedForElez(nuova));
+			tutteElez.add(nuova);
 		}
 		return tutteElez;
 		
