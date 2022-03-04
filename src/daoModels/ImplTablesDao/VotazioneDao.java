@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import auditing.LogElement;
 import auditing.LogHistory;
@@ -12,10 +14,13 @@ import daoModels.ElezioneVote_Categorico;
 import daoModels.ElezioneVote_CategoricoConPref;
 import daoModels.ElezioneVote_Ordinale;
 import daoModels.ReferendumVote;
+import daoModels.DbTablesRapresentation.Elezione_TB;
+import daoModels.DbTablesRapresentation.VotoReferendum_TB;
 import daoModels.InterfaceTablesDao.IVotazioneDao;
 import useObject.General.SystemLoggedUser;
 import useObject.voteElements.Elezione;
 import useObject.voteElements.Referendum;
+import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class VotazioneDao implements IVotazioneDao {
 
@@ -189,6 +194,44 @@ public class VotazioneDao implements IVotazioneDao {
 		}
 		
 		return false;
+	}
+
+	@Override
+	public List<VotoReferendum_TB> getVotiReferendum(Referendum referendum) {
+		final String query = "SELECT * FROM sistemaelettoraleingsw.votoreferendum v WHERE v.referendumId_fk = ?;";
+		Connection dbConn = DBConnector.getDbConnection();
+		
+		if(!SystemLoggedUser.getInstance().isImpiegato()) {
+			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un elettore con queste funzioni",true));
+			throw new IllegalStateException("Elettore cannot ask voti");
+		}
+		
+		try {
+			
+			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
+			preparedStmt.setInt(1, referendum.getId());
+			
+			ResultSet reSet = preparedStmt.executeQuery();
+			
+			List<VotoReferendum_TB> voti = new ArrayList<VotoReferendum_TB>();
+			
+			while(reSet.next()) {
+				voti.add(new VotoReferendum_TB(
+						reSet.getInt(1),
+						reSet.getBoolean(2),
+						reSet.getBoolean(3),
+						referendum.getId()
+						));
+			}
+			
+			return voti;
+			
+		} catch (SQLException e) {
+			LogHistory.getInstance().addLog(new LogElement(this, "SQLException", e.getSQLState(), true));
+		}
+		
+		return null;
+		
 	}
 
 
