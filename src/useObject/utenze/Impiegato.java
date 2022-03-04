@@ -19,6 +19,7 @@ import useObject.General.SystemLoggedUser;
 import useObject.voteElements.Elezione;
 import useObject.voteElements.Referendum;
 import useObject.voteElements.Votazione;
+import useObject.voteElements.results.EsitoReferendum;
 
 public class Impiegato extends Utente {
 
@@ -80,7 +81,6 @@ public class Impiegato extends Utente {
 	public Boolean inserisciReferendum(NewReferendum referendumDaInserire) {
 		LogHistory.getInstance().addLog(new LogElement(this, "inserisciReferendum", "Adding new referendum"));
 		return new ReferendumDao().addNewReferendum(referendumDaInserire);
-	}
-	
+	}	
 	
 }
