@@ -73,4 +73,34 @@ public class PartitoDao implements IPartitoDao {
 		return null;
 	}
 
+	@Override
+	public List<Partito_TB> getAllPartitiVotatiVoto(int idVotazione) {
+		final String query = "SELECT p.* FROM sistemaelettoraleingsw.partitivotati pv JOIN partito p ON pv.partito_fk = p.id WHERE pv.votoElezione_fk = ?;";
+		Connection dbConn = DBConnector.getDbConnection();
+		
+		List<Partito_TB> tuttiPartiti = new ArrayList<Partito_TB>();
+		
+		try {
+			
+			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
+	
+			preparedStmt.setInt(1, idVotazione);
+			
+			ResultSet reSet = preparedStmt.executeQuery();
+		
+			while(reSet.next()) {
+				tuttiPartiti.add(new Partito_TB(
+						reSet.getInt(1),
+						reSet.getString(2)));
+			}
+			
+			return tuttiPartiti;
+			
+		} catch (SQLException e) {
+			LogHistory.getInstance().addLog(new LogElement(this, "SQLException", e.getSQLState(), true));
+		}
+		
+		return null;
+	}
+
 }

@@ -13,5 +13,7 @@ public interface ICandidatoDao {
 	public List<Candidato_TB>getCandidatiPartito(Partito partito);
 	
 	public List<Candidato_TB>getCandidatiElezione(Elezione partito);
+	
+	public List<Candidato_TB>getAllCandidatiVotatiVoto(int idVoto);
 
 }

@@ -12,4 +12,5 @@ public interface IPartitoDao {
 
 	public List<Partito_TB> getAllPartitiElezione(Elezione elezione);
 	
+	public List<Partito_TB> getAllPartitiVotatiVoto(int idVotazione);
 }
