@@ -47,6 +47,9 @@ public class Candidato {
 	public static List<Candidato> getAllCandidatiElezione(Elezione elezione){
 		return listTabCandToCand(new CandidatoDao().getCandidatiElezione(elezione));
 	}
+	public static List<Candidato> getAllCandidatiVoto(int idVoto){
+		return listTabCandToCand(new CandidatoDao().getAllCandidatiVotatiVoto(idVoto));
+	}
 	
 	private static List<Candidato> listTabCandToCand(List<Candidato_TB> candidati){
 		List<Candidato> listaCandidati = new ArrayList<Candidato>();

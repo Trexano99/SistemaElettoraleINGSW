@@ -2,6 +2,7 @@ package useObject.baseElements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import daoModels.DbTablesRapresentation.Candidato_TB;
 import daoModels.DbTablesRapresentation.Partito_TB;
@@ -42,6 +43,9 @@ public class Partito {
 	public static List<Partito> getAllPartitiElezione(Elezione elezione){
 		return listTabPartToPart(new PartitoDao().getAllPartitiElezione(elezione));
 	}
+	public static List<Partito> getAllPartitiVotatiInVoto(int idVoto){
+		return listTabPartToPart(new PartitoDao().getAllPartitiVotatiVoto(idVoto));
+	}
 	private static List<Partito> listTabPartToPart(List<Partito_TB> partiti){
 		List<Partito> listaPartiti = new ArrayList<Partito>();
 		for (Partito_TB partito : partiti) {
@@ -54,6 +58,24 @@ public class Partito {
 			
 		}		
 		return listaPartiti;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Partito other = (Partito) obj;
+		return id == other.id;
 	}
 	
 	
