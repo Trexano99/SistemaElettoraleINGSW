@@ -17,7 +17,7 @@ public class ReferendumVote {
 	public Referendum getReferendum() {
 		return referendum;
 	}
-	public boolean isVote() {
+	public Boolean isVote() {
 		return vote;
 	}
 	

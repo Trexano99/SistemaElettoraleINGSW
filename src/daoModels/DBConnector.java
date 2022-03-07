@@ -34,12 +34,11 @@ public class DBConnector {
 	 * @return Connessione al DB
 	 */
 	public static Connection getDbConnection() {
-		LogHistory.getInstance().addLog(new LogElement("daoModels.DBConnector", "gettingDbConnection", "Provando ad ottenere la connessione con il DB"));
 		try {
 			if(dbConnection == null || dbConnection.isClosed())
 				throw new SQLException();
 		} catch (SQLException e) {
-			LogHistory.getInstance().addLog(new LogElement("daoModels.DBConnector", "gettingDbConnection", "Provando ad ottenere la connessione con il DB",true));
+			LogHistory.getInstance().addLog(new LogElement(DBConnector.class, "gettingDbConnection", "Provando ad ottenere la connessione con il DB",true));
 			throw new IllegalStateException("Server seems not to be started");
 		}
 		return dbConnection;
@@ -50,9 +49,9 @@ public class DBConnector {
 	 * @throws SQLException Nel caso ci siano errori di comunicazione con il DB
 	 */
 	public static void openConnection() throws SQLException {
-		LogHistory.getInstance().addLog(new LogElement("daoModels.DBConnector", "openConnection", "Provando ad aprire la connessione con il DB"));
+		LogHistory.getInstance().addLog(new LogElement(DBConnector.class, "openConnection", "Provando ad aprire la connessione con il DB"));
 		dbConnection = DriverManager.getConnection(url, username, password);
-		LogHistory.getInstance().addLog(new LogElement("daoModels.DBConnector", "openConnection", "Connessione con il DB aperta con successo"));
+		LogHistory.getInstance().addLog(new LogElement(DBConnector.class, "openConnection", "Connessione con il DB aperta con successo"));
 	}
 
 	/**
@@ -62,7 +61,7 @@ public class DBConnector {
 		try {
 			if(dbConnection!=null && !dbConnection.isClosed())
 				dbConnection.close();
-			LogHistory.getInstance().addLog(new LogElement("daoModels.DBConnector", "closeConnection", "Chiusa la connessione con il DB"));
+			LogHistory.getInstance().addLog(new LogElement(DBConnector.class, "closeConnection", "Chiusa la connessione con il DB"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
