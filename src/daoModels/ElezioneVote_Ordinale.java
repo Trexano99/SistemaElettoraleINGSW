@@ -32,6 +32,8 @@ public class ElezioneVote_Ordinale {
 	}
 	
 	public String getListaCandidatiDbFormat() {
+		if(candidati == null ||candidati.size()==0)
+			return "[]";
 		StringBuilder sb = new StringBuilder("[");
 		for (Candidato candidato : candidati) {
 			sb.append(candidato.getId()+",");
@@ -42,6 +44,8 @@ public class ElezioneVote_Ordinale {
 	}
 	
 	public String getListaPartitiDbFormat() {
+		if(partiti == null ||partiti.size()==0)
+			return "[]";
 		StringBuilder sb = new StringBuilder("[");
 		for (Partito partito : partiti) {
 			sb.append(partito.getId()+",");
