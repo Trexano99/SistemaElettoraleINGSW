@@ -3,6 +3,7 @@ package javaFX;
 import java.sql.SQLException;
 
 import daoModels.DBConnector;
+import javaFX.GraphicControllers.LogInViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,9 +26,9 @@ public class StartingPage extends Application {
 		DBConnector.openConnection();
 		
 		try {
-			Parent root = FXMLLoader.load(getClass().getResource("/javaFx/GraphicElements/paginaAutenticazione.fxml"));
-			primaryStage.setTitle("Sistema Elettorale");
-			primaryStage.setScene(new Scene(root, 600, 500));
+			Parent root = FXMLLoader.load(getClass().getResource(LogInViewController.RESOURCE));
+			primaryStage.setTitle(LogInViewController.TITOLO);
+			primaryStage.setScene(new Scene(root, LogInViewController.WIDTH, LogInViewController.HEIGTH));
 			primaryStage.show();
 		}catch(Exception e) {
 	        e.printStackTrace();
