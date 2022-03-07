@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,8 +46,14 @@ public class VotazioneDao implements IVotazioneDao {
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
 			preparedStmt.setString(1, SystemLoggedUser.getInstance().getUtenteLoggato().getId());
 			preparedStmt.setInt(2, referVote.getElezione().getId());
-			preparedStmt.setInt(3, referVote.getCandidato().getId());
-			preparedStmt.setInt(4, referVote.getPartito().getId());
+			if(referVote.getCandidato()!=null)
+				preparedStmt.setInt(3, referVote.getCandidato().getId());
+			else
+				preparedStmt.setNull(3,java.sql.Types.INTEGER);
+			if(referVote.getPartito()!=null)
+				preparedStmt.setInt(4, referVote.getPartito().getId());
+			else
+				preparedStmt.setNull(4,java.sql.Types.INTEGER);
 			
 			preparedStmt.executeQuery();
 			
@@ -73,8 +80,14 @@ public class VotazioneDao implements IVotazioneDao {
 			
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
 			preparedStmt.setString(1, SystemLoggedUser.getInstance().getUtenteLoggato().getId());
-			preparedStmt.setInt(2, referVote.getElezione().getId());
-			preparedStmt.setInt(3, referVote.getPartito().getId());
+			if(referVote.getElezione()!= null)
+				preparedStmt.setInt(2, referVote.getElezione().getId());
+			else
+				preparedStmt.setNull(2,java.sql.Types.INTEGER);
+			if(referVote.getPartito()!=null)
+				preparedStmt.setInt(3, referVote.getPartito().getId());
+			else
+				preparedStmt.setNull(3,java.sql.Types.INTEGER);
 			preparedStmt.setString(4, referVote.getListaCandidatiDbFormat());
 			
 			preparedStmt.executeQuery();
@@ -132,7 +145,10 @@ public class VotazioneDao implements IVotazioneDao {
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
 			preparedStmt.setString(1, SystemLoggedUser.getInstance().getUtenteLoggato().getId());
 			preparedStmt.setInt(2, referVote.getReferendum().getId());
-			preparedStmt.setBoolean(3, referVote.isVote());
+			if(referVote.isVote()!=null)
+				preparedStmt.setBoolean(3, referVote.isVote());
+			else
+				preparedStmt.setNull(3,java.sql.Types.INTEGER);
 			
 			preparedStmt.executeQuery();
 			
@@ -147,7 +163,7 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public Boolean hasElettoreVotedForRef(Referendum ref) {
-		final String query = "`sistemaelettoraleingsw`.`hasElettoreVotedElez`(?, ?);";
+		final String query = "SELECT `sistemaelettoraleingsw`.`hasElettoreVotedRef`(?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
 		if(!SystemLoggedUser.getInstance().isElettore()) {
@@ -166,7 +182,7 @@ public class VotazioneDao implements IVotazioneDao {
 			rs.next();
 			
 			
-			return rs.getBoolean(0);
+			return rs.getBoolean(1);
 			
 		} catch (SQLException e) {
 			LogHistory.getInstance().addLog(new LogElement(this, "SQLException", e.getSQLState(), true));
@@ -177,7 +193,7 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public Boolean hasElettoreVotedForElez(Elezione ele) {
-		final String query = "`sistemaelettoraleingsw`.`hasElettoreVotedElez`(?, ?);";
+		final String query = "SELECT `sistemaelettoraleingsw`.`hasElettoreVotedElez`(?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
 		if(!SystemLoggedUser.getInstance().isElettore()) {
@@ -191,9 +207,11 @@ public class VotazioneDao implements IVotazioneDao {
 			preparedStmt.setString(1, SystemLoggedUser.getInstance().getUtenteLoggato().getId());
 			preparedStmt.setInt(2, ele.getId());
 			
-			preparedStmt.executeQuery();
+			ResultSet rs = preparedStmt.executeQuery();
+
+			rs.next();
 			
-			return true;
+			return rs.getBoolean(1);
 			
 		} catch (SQLException e) {
 			LogHistory.getInstance().addLog(new LogElement(this, "SQLException", e.getSQLState(), true));

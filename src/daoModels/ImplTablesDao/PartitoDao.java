@@ -47,7 +47,7 @@ public class PartitoDao implements IPartitoDao {
 
 	@Override
 	public List<Partito_TB> getAllPartitiElezione(Elezione elezione) {
-		final String query = "SELECT p.* FROM sistemaelettoraleingsw.partito p JOIN partitielezione pe ON p.id = pe.partito_fk WHERE p.id = ?;";
+		final String query = "SELECT p.* FROM sistemaelettoraleingsw.partito p JOIN partitielezione pe ON p.id = pe.partito_fk WHERE pe.elezione_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
 		List<Partito_TB> tuttiPartiti = new ArrayList<Partito_TB>();
@@ -55,7 +55,9 @@ public class PartitoDao implements IPartitoDao {
 		try {
 			
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
-	
+
+			preparedStmt.setInt(1, elezione.getId());
+			
 			ResultSet reSet = preparedStmt.executeQuery();
 		
 			while(reSet.next()) {

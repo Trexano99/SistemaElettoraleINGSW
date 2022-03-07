@@ -16,7 +16,7 @@ public class ElettoreDao implements IElettoreDao {
 	@Override
 	public Elettore_TB get(String elettoreId) {
 		
-		final String query = "SELECT * FROM `sistemaelettoraleingsw`.`elettore` e WHERE e.CodiceFiscale = ?";
+		final String query = "SELECT * FROM `sistemaelettoraleingsw`.`elettore` e WHERE e.CodiceFiscale = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
 		try {
@@ -28,7 +28,7 @@ public class ElettoreDao implements IElettoreDao {
 			
 			reSet.next();
 			
-			return new Elettore_TB(elettoreId, reSet.getString(1), reSet.getString(2));
+			return new Elettore_TB(elettoreId, reSet.getString(2), reSet.getString(3));
 			
 		} catch (SQLException e) {
 			LogHistory.getInstance().addLog(new LogElement(this, "SQLException", e.getSQLState(), true));
