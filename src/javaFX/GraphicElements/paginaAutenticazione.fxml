@@ -97,7 +97,7 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onMouseClicked="#handleLogin" text="LogIn" textAlignment="CENTER">
+                  <Button fx:id="btnLogin" alignment="CENTER" contentDisplay="CENTER" disable="true" mnemonicParsing="false" onAction="#handleLogin" text="LogIn" textAlignment="CENTER">
                      <font>
                         <Font name="Baskerville Old Face" size="16.0" />
                      </font>
