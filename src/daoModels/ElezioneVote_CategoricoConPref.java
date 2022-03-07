@@ -32,6 +32,8 @@ public class ElezioneVote_CategoricoConPref {
 	}
 	
 	public String getListaCandidatiDbFormat() {
+		if(candidati == null || candidati.size()==0)
+			return "[]";
 		StringBuilder sb = new StringBuilder("[");
 		for (Candidato candidato : candidati) {
 			sb.append(candidato.getId()+",");

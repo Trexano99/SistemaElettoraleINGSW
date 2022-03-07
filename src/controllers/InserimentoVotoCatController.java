@@ -39,12 +39,6 @@ public class InserimentoVotoCatController implements IVoteController  {
 		viewContr.initializeTimer();
 	}
 
-	public void askConfirmation(Candidato scelta) {
-		if(viewContr.chiediConferma("Confermare il voto?", "Confermare di star votando il candidato: "+scelta.toString())) {
-			registerVote(scelta);
-			viewContr.getPreviousPage();
-		}
-	}
 	
 	public void askConfirmation(Partito scelta) {
 		if(viewContr.chiediConferma("Confermare il voto?", "Confermare di star votando il partito: "+scelta.toString())) {
@@ -125,11 +119,7 @@ public class InserimentoVotoCatController implements IVoteController  {
 		e.voteElez_Categorico(elezione, null, p);
 	}
 	
-	private void registerVote(Candidato c) {
-		Elettore e = (Elettore)SystemLoggedUser.getInstance().getUtenteLoggato();
-		e.voteElez_Categorico(elezione, c, null);
-	}
-	
+
 	private void registerVote(Partito p, List<Candidato> candidati) {
 		Elettore e = (Elettore)SystemLoggedUser.getInstance().getUtenteLoggato();
 		e.voteElez_CategoricoConPref(elezione, p , candidati);
@@ -138,6 +128,12 @@ public class InserimentoVotoCatController implements IVoteController  {
 	private void registerVote() {
 		Elettore e = (Elettore)SystemLoggedUser.getInstance().getUtenteLoggato();
 		e.voteElez_Categorico(elezione, null, null);
+	}
+
+	public void askConfirmation(Candidato selectedItem) {
+		Elettore e = (Elettore)SystemLoggedUser.getInstance().getUtenteLoggato();
+		e.voteElez_Categorico(elezione, selectedItem, null);
+		
 	}
 	
 
