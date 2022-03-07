@@ -77,6 +77,11 @@ public class Partito {
 		Partito other = (Partito) obj;
 		return id == other.id;
 	}
+
+	@Override
+	public String toString() {
+		return  nome ;
+	}
 	
 	
 }

@@ -1,6 +1,8 @@
 package useObject.baseElements;
 
 import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -62,4 +64,13 @@ public class Candidato {
 		}		
 		return listaCandidati;
 	}
+
+
+	@Override
+	public String toString() { 
+		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
+		return nome + " " + cognome + " (" + df.format(dataNascita) + ")";
+	}
+	
+	
 }

@@ -49,6 +49,30 @@ public abstract class Votazione {
 		this.hasLoggedElettoreVotedFor = hasLoggedElettoreVotedFor;
 	}
 	
+	public String getIsClosedStr() {
+		if(isClosed)
+			return "CHIUSA";
+		return "APERTA";
+	}
+	public String getIsFinishedStr() {
+		if(isFinished)
+			return "TERMINATA";
+		return "NON TERMINATA";
+	}
+	public String getTipoElezioneStr() {
+		switch (tipoElezione) {
+		case Referendum:
+			return "REFERENDUM";
+		case VotazioneCategorica:
+			return "VOTAZIONE CATEGORICA";
+		case VotazioneCategoricaConPref:
+			return "VOTAZIONE CATEGORICA CON PREFERENZA";
+		case VotazioneOrdinale:
+			return "VOTAZIONE ORDINALE";
+		default:
+			return "UNDEFINED";
+		}
+	}
 	
 	
 }
