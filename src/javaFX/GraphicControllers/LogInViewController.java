@@ -1,8 +1,16 @@
 package javaFX.GraphicControllers;
 
-import controllers.LogInController;
-import javafx.fxml.FXML;
+import java.io.IOException;
 
+import auditing.LogElement;
+import auditing.LogHistory;
+import controllers.LogInController;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
@@ -10,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 
 
 /**
@@ -22,6 +31,12 @@ import javafx.scene.paint.Color;
  */
 public class LogInViewController{
 
+	public final static String TITOLO = "Sistema Elettorale - LOGIN";
+	public final static String RESOURCE = "/javaFx/GraphicElements/paginaAutenticazione.fxml";
+	public final static int WIDTH = 600;
+	public final static int HEIGTH = 500;
+	
+	
     @FXML
     private Button btnLogin;
 
@@ -72,7 +87,7 @@ public class LogInViewController{
     }
     
     @FXML
-    void handleLogin(MouseEvent event) {
+    void handleLogin(ActionEvent event) {
     	
     	if(groupElettore.isSelected()) {
 
@@ -80,12 +95,25 @@ public class LogInViewController{
         		message1.setVisible(true);
         	else {
         		message1.setVisible(false);
-        		LogInController.attemptElettoreLogin(lblName.getText(), lblPassword.getText(), this);
+        		if(LogInController.attemptElettoreLogin(lblName.getText(), lblPassword.getText(), this)) {
+					try {
+	        			 Stage stageTheEventSourceNodeBelongs = (Stage) ((Node)event.getSource()).getScene().getWindow();
+	        			 Parent root = FXMLLoader.load(getClass().getResource(ElettoreMainViewController.RESOURCE));
+						
+	        			 stageTheEventSourceNodeBelongs.setTitle(ElettoreMainViewController.TITOLO);
+	        			 stageTheEventSourceNodeBelongs.setScene(new Scene(root, ElettoreMainViewController.WIDTH, ElettoreMainViewController.HEIGTH));
+	        			 stageTheEventSourceNodeBelongs.show();
+					} catch (IOException e) {
+						LogHistory.getInstance().addLog(new LogElement(this, "handleLogin", "Fail changing scene", true));
+					}
+        		}
         	}
     	}
     	else {
     		message1.setVisible(false);
-    		LogInController.attemptImpiegatoLogin(lblName.getText(), lblPassword.getText(), this);
+    		if(LogInController.attemptImpiegatoLogin(lblName.getText(), lblPassword.getText(), this)) {
+    			
+    		}
     	}
 
     }
@@ -109,22 +137,12 @@ public class LogInViewController{
         });
 
     }
-    
-    
-    public void confirmLogin() {
-		
-    	lblMessage.setText("Benvenuto!");
-		lblMessage.setTextFill(Color.rgb(21, 117, 84));
-    	
-		System.out.println("LOGIN DONE");
-	}
 	
 	public void denyLogin() {
 		
 		lblMessage.setText("Credenziali errate, riprovare");
 		lblMessage.setTextFill(Color.rgb(210, 39, 30));
         
-		System.out.println("LOGIN FAILED");
 	}
 	
 	public void signalError(String errorName, String errorDetails) {
