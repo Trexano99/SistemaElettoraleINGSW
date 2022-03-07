@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
+
+<SplitPane fx:id="mainPane" dividerPositions="0.11055276381909548, 0.5" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" orientation="VERTICAL" prefHeight="454.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="javaFX.GraphicControllers.InserimentoOrdVoteViewController">
+  <items>
+    <AnchorPane maxHeight="50.0" minHeight="40.0" SplitPane.resizableWithParent="false">
+         <children>
+            <HBox fillHeight="false" maxWidth="1.7976931348623157E308" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label id="l_nomeUtente" fx:id="lbNomeElettore" alignment="CENTER" contentDisplay="CENTER" text="NomeElettore" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label id="l_ruoloUtente" fx:id="lbRuoloElettore" alignment="CENTER" contentDisplay="CENTER" text="Ruolo utente: Elettore" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label id="l_ruoloUtente" fx:id="lbTimer" alignment="CENTER" contentDisplay="CENTER" text="10:00" textAlignment="CENTER" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                     </children>
+                  </AnchorPane>
+               </children>
+            </HBox>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="306.0" prefWidth="599.0">
+         <children>
+            <HBox prefHeight="351.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="7.0" prefHeight="41.0" prefWidth="192.0" text="Partiti" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="listPartiti" layoutX="5.0" layoutY="42.0" prefHeight="299.0" prefWidth="192.0" />
+                     </children>
+                  </Pane>
+                  <Pane prefHeight="351.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="13.0" prefHeight="41.0" prefWidth="186.0" text="Candidati" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="listCandidati" layoutX="7.0" layoutY="41.0" prefHeight="299.0" prefWidth="186.0" />
+                     </children>
+                  </Pane>
+                  <Separator orientation="VERTICAL" prefHeight="351.0" prefWidth="34.0" />
+                  <Pane prefHeight="200.0" prefWidth="200.0">
+                     <children>
+                        <Label prefHeight="41.0" prefWidth="199.0" text="Partiti Scelti" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="listPartitiScelti" layoutY="41.0" prefHeight="129.0" prefWidth="186.0" />
+                        <Label layoutY="170.0" prefHeight="31.0" prefWidth="199.0" text="Candidati Scelti" textAlignment="CENTER">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <ListView fx:id="listCandidatiScelti" layoutY="199.0" prefHeight="138.0" prefWidth="186.0" />
+                     </children>
+                  </Pane>
+               </children>
+            </HBox>
+         </children></AnchorPane>
+      <AnchorPane maxHeight="-Infinity" prefHeight="44.0" prefWidth="602.0" SplitPane.resizableWithParent="false">
+         <children>
+            <Button fx:id="btnReset" layoutX="451.0" layoutY="10.0" mnemonicParsing="false" onAction="#reset" text="Reset" />
+            <Button fx:id="btnInvia" layoutX="532.0" layoutY="10.0" mnemonicParsing="false" onAction="#sendVote" text="Invia" />
+            <Button fx:id="btnAnnulla" layoutX="375.0" layoutY="10.0" mnemonicParsing="false" onAction="#annulla" text="Annulla" />
+         	<Button fx:id="btn_aggiungiAScelti" layoutX="14.0" layoutY="10.0" mnemonicParsing="false" onAction="#addSelectedToChoosen" text="Aggiugi come scelti" />
+            <Button fx:id="btn_rimuoviDaScelti" layoutX="146.0" layoutY="10.0" mnemonicParsing="false" onAction="#removeSelectedChoosen" text="Rimuovi da scelti" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>

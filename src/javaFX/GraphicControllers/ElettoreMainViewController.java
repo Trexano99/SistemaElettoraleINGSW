@@ -152,7 +152,18 @@ public class ElettoreMainViewController {
 
     
     public void showVotoOrdinale(Elezione elezione) {
-       //FAI
+    	try {
+			 Stage stageTheEventSourceNodeBelongs = (Stage) (mainPane.getScene().getWindow());			
+			 InserimentoOrdVoteViewController.elezione = elezione;
+			 Parent root = FXMLLoader.load(getClass().getResource(InserimentoOrdVoteViewController.RESOURCE));
+			
+			 stageTheEventSourceNodeBelongs.setTitle(InserimentoOrdVoteViewController.TITOLO);
+			 stageTheEventSourceNodeBelongs.setScene(new Scene(root, InserimentoOrdVoteViewController.WIDTH, InserimentoOrdVoteViewController.HEIGTH));
+			 
+			 stageTheEventSourceNodeBelongs.show();
+		} catch (IOException ex) {
+			LogHistory.getInstance().addLog(new LogElement(this, "showVotoOrdinale", "Fail changing scene", true));
+		}
     }
     
     public void showVotoCategorico(Elezione elezione) {
