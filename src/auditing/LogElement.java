@@ -1,5 +1,6 @@
 package auditing;
 
+import java.lang.reflect.Array;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -49,11 +50,10 @@ public class LogElement {
 	public String toString() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if(!isError)
-			return (df.format(date))+" - ["+logSource.getClass().getSimpleName()+"]  "+logName+" : "+logDetails;
+			return (df.format(date))+" - ["+logSource.toString()+"]  "+logName+" : "+logDetails;
 		else
 			return (df.format(date))+" - !!! ERROR !!! ["+logSource.getClass().getSimpleName()+"]  "+logName+" : "+logDetails;
 	}
-	
 	
 
 }
