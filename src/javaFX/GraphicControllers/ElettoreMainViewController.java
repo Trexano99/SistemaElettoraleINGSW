@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Timer;
 
@@ -19,7 +20,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.CustomMenuItem;
@@ -33,6 +36,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import observer.timer.ITimerObserver;
@@ -82,7 +86,7 @@ public class ElettoreMainViewController {
 
     @FXML
     void btnLogoutClicked(ActionEvent event) {
-
+    	if(chiediConferma("LOGOUT","Si vuole lasciare la sessione?"))
     	try {
 			 Stage stageTheEventSourceNodeBelongs = (Stage) ((Node)event.getSource()).getScene().getWindow();
 			 Parent root = FXMLLoader.load(getClass().getResource(LogInViewController.RESOURCE));
@@ -106,6 +110,16 @@ public class ElettoreMainViewController {
         assert lbNomeElettore != null : "fx:id=\"lbNomeElettore\" was not injected: check your FXML file 'SceltaElezione_Elettore - Copia.fxml'.";
         assert tb_tabellaElezioni != null : "fx:id=\"tb_tabellaElezioni\" was not injected: check your FXML file 'SceltaElezione_Elettore - Copia.fxml'.";        
         
+        colNomeV.setCellValueFactory(
+        		new PropertyValueFactory<>("nome"));
+        colTipoV.setCellValueFactory(
+        		new PropertyValueFactory<>("tipoElezioneStr"));
+        colVAperta.setCellValueFactory(
+        		new PropertyValueFactory<>("isClosedStr"));
+        colVTerminata.setCellValueFactory(
+        		new PropertyValueFactory<>("isFinishedStr"));
+        
+        
         ContextMenu cm = new ContextMenu();
         MenuItem mi1 = new MenuItem("Vota Elezione");
         mi1.setOnAction( e -> {
@@ -122,6 +136,7 @@ public class ElettoreMainViewController {
                 if(t.getButton() == MouseButton.SECONDARY && 
                 		tb_tabellaElezioni.getSelectionModel().getSelectedItem()!=null&&
                 		tb_tabellaElezioni.getSelectionModel().getSelectedItem().isClosed()==false&&
+                        tb_tabellaElezioni.getSelectionModel().getSelectedItem().isFinished()==false&&
                 		tb_tabellaElezioni.getSelectionModel().getSelectedItem().getHasLoggedElettoreVotedFor()==false) {
                     cm.show(tb_tabellaElezioni, t.getScreenX(), t.getScreenY());
                 }
@@ -139,14 +154,6 @@ public class ElettoreMainViewController {
     }
 
     public void addToTable(ObservableList<Votazione> votazioni) {
-        colNomeV.setCellValueFactory(
-        		new PropertyValueFactory<>("nome"));
-        colTipoV.setCellValueFactory(
-        		new PropertyValueFactory<>("tipoElezioneStr"));
-        colVAperta.setCellValueFactory(
-        		new PropertyValueFactory<>("isClosedStr"));
-        colVTerminata.setCellValueFactory(
-        		new PropertyValueFactory<>("isFinishedStr"));
         tb_tabellaElezioni.setItems(votazioni);
     }
 
@@ -196,5 +203,24 @@ public class ElettoreMainViewController {
 		}
     }
     
+    public Boolean chiediConferma(String titolo, String contenuto) {
+		Stage stage = (Stage) mainPane.getScene().getWindow();
+		
+		Alert.AlertType type = Alert.AlertType.CONFIRMATION;
+		Alert alert = new Alert(type, "");
+		
+		alert.initModality(Modality.APPLICATION_MODAL);
+		alert.initOwner(stage);
+		
+		alert.getDialogPane().setContentText(contenuto);
+		alert.getDialogPane().setHeaderText(titolo);
+		
+		Optional<ButtonType> result = alert.showAndWait();
+		if(result.get() == ButtonType.OK) 
+			return true;
+		return false;
+		
+	}
+
     
 }
