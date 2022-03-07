@@ -16,7 +16,7 @@ public class ReferendumUpdater {
 	
 	
 	
-	private ReferendumUpdater(Referendum referendum) {
+	public ReferendumUpdater(Referendum referendum) {
 		super();
 		this.id = referendum.getId();
 		this.nome = referendum.getNome();

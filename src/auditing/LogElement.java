@@ -50,7 +50,7 @@ public class LogElement {
 	public String toString() {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 		if(!isError)
-			return (df.format(date))+" - ["+logSource.toString()+"]  "+logName+" : "+logDetails;
+			return (df.format(date))+" - ["+logSource.getClass().toString()+"]  "+logName+" : "+logDetails;
 		else
 			return (df.format(date))+" - !!! ERROR !!! ["+logSource.getClass().getSimpleName()+"]  "+logName+" : "+logDetails;
 	}
