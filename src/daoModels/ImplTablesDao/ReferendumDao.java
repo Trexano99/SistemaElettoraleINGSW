@@ -23,6 +23,7 @@ public class ReferendumDao implements IReferendumDao {
 
 	@Override
 	public boolean addNewReferendum(NewReferendum referendum) {
+		LogHistory.getInstance().addLog(new LogElement(this, " addNewReferendum", "Aggiunta nuovo referendum a DB "));
 		final String query = "INSERT INTO `sistemaelettoraleingsw`.`referendum` (`nomeBreve`, `quesito`, `withQuorum`, `isClosed`, `isFinished`, `tipoElezione_fk`) VALUES (?, ?, ?, ?, ?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -49,6 +50,7 @@ public class ReferendumDao implements IReferendumDao {
 
 	@Override
 	public boolean removeReferendum(Referendum referendum) {
+		LogHistory.getInstance().addLog(new LogElement(this, " addNewReferendum", "Rimozione referendum da DB"));
 		final String query = "DELETE FROM `sistemaelettoraleingsw`.`referendum` r WHERE r.id = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -70,6 +72,7 @@ public class ReferendumDao implements IReferendumDao {
 
 	@Override
 	public boolean updateReferendum(ReferendumUpdater referendum) {
+		LogHistory.getInstance().addLog(new LogElement(this, " updateReferendum", "Aggiornamento referendum nel DB"));
 			
 		final String query = "UPDATE `sistemaelettoraleingsw`.`referendum` SET `nomeBreve` = ?, `quesito` = ?, `withQuorum` = ?, `isClosed` = ?, `isFinished` = ? WHERE `id` = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
@@ -97,6 +100,7 @@ public class ReferendumDao implements IReferendumDao {
 
 	@Override
 	public List<Referendum_TB> getAllReferendums() {
+		LogHistory.getInstance().addLog(new LogElement(this, " updateReferendum", "Richiesta tutti referendum a DB"));
 		final String query = "SELECT * FROM `sistemaelettoraleingsw`.`referendum`;";
 		Connection dbConn = DBConnector.getDbConnection();
 		

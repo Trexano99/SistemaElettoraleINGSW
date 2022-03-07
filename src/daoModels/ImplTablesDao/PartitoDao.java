@@ -19,6 +19,7 @@ public class PartitoDao implements IPartitoDao {
 
 	@Override
 	public List<Partito_TB> getAllPartiti() {
+		LogHistory.getInstance().addLog(new LogElement(this, " getAllPartiti", "Richiesta DB tutti partiti"));
 		final String query = "SELECT * FROM sistemaelettoraleingsw.partito;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -47,6 +48,7 @@ public class PartitoDao implements IPartitoDao {
 
 	@Override
 	public List<Partito_TB> getAllPartitiElezione(Elezione elezione) {
+		LogHistory.getInstance().addLog(new LogElement(this, " getAllPartitiElezione", "Richiesta DB partiti candidati a elezione"));
 		final String query = "SELECT p.* FROM sistemaelettoraleingsw.partito p JOIN partitielezione pe ON p.id = pe.partito_fk WHERE pe.elezione_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -77,6 +79,7 @@ public class PartitoDao implements IPartitoDao {
 
 	@Override
 	public List<Partito_TB> getAllPartitiVotatiVoto(int idVotazione) {
+		LogHistory.getInstance().addLog(new LogElement(this, " getAllPartitiVotazione", "Richiesta DB partiti di votazione"));
 		final String query = "SELECT p.* FROM sistemaelettoraleingsw.partitivotati pv JOIN partito p ON pv.partito_fk = p.id WHERE pv.votoElezione_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		

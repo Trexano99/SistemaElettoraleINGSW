@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import auditing.LogElement;
+import auditing.LogHistory;
 import daoModels.DBConnector;
 import daoModels.DbTablesRapresentation.GenericUser_TB;
 import daoModels.InterfaceTablesDao.IGenericUserDao;
@@ -34,6 +36,7 @@ public class GenericUserDao implements IGenericUserDao {
 	 * {@code false} altrimenti
 	 */
 	public String loginElettore(GenericUser_TB utente) {
+		LogHistory.getInstance().addLog(new LogElement(this, " loginElettore", "Login Elettore verso il DB"));
 		return baseLogin("SELECT sistemaelettoraleingsw.loginElettore(?, ?);",utente.getUsername(), utente.getPassword());
 	}
 	
@@ -48,6 +51,7 @@ public class GenericUserDao implements IGenericUserDao {
 	 * 
 	 */
 	public String loginImpiegato(GenericUser_TB utente) {
+		LogHistory.getInstance().addLog(new LogElement(this, " loginElettore", "Login Impiegato verso il DB"));
 		return baseLogin("SELECT sistemaelettoraleingsw.loginImpiegato(?, ?);",utente.getUsername(), utente.getPassword());
 	}
 	

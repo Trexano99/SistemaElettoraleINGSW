@@ -22,6 +22,7 @@ public class CandidatoDao implements ICandidatoDao {
 
 	@Override
 	public List<Candidato_TB> getAllCandidati() {
+		LogHistory.getInstance().addLog(new LogElement(this, "getAllCandidati", "Richiesta DB tutti candidati"));
 		final String query = "SELECT * FROM sistemaelettoraleingsw.candidato;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -53,6 +54,7 @@ public class CandidatoDao implements ICandidatoDao {
 
 	@Override
 	public List<Candidato_TB> getCandidatiPartito(Partito partito) {
+		LogHistory.getInstance().addLog(new LogElement(this, "getCandidatiPartito", "Richiesta DB candidati partito"));
 		final String query = "SELECT * FROM sistemaelettoraleingsw.candidato WHERE partitoAppartenenza_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -86,6 +88,7 @@ public class CandidatoDao implements ICandidatoDao {
 
 	@Override
 	public List<Candidato_TB> getCandidatiElezione(Elezione elezione) {
+		LogHistory.getInstance().addLog(new LogElement(this, "getCandidatiElezione", "Richiesta DB candidati elezione"));
 		final String query = "SELECT c.* FROM sistemaelettoraleingsw.candidato c JOIN candidatielezione ce ON ce.candidato_fk = c.id WHERE ce.elezione_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -119,6 +122,7 @@ public class CandidatoDao implements ICandidatoDao {
 
 	@Override
 	public List<Candidato_TB> getAllCandidatiVotatiVoto(int idVoto) {
+		LogHistory.getInstance().addLog(new LogElement(this, "getAllCandidatiVotatiVoto", "Richiesta DB candidati votati nel voto"));
 		final String query = "SELECT c.* FROM sistemaelettoraleingsw.candidativotati cv JOIN candidato c ON cv.candidato_fk = c.id WHERE cv.votoElezione_fk = ?;";
 Connection dbConn = DBConnector.getDbConnection();
 		

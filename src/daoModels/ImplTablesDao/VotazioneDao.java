@@ -33,6 +33,7 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public boolean addElezioneVote(ElezioneVote_Categorico referVote) {
+		LogHistory.getInstance().addLog(new LogElement(this, " addElezioneVote", "Aggiunta voto categorico nel DB"));
 		final String query = "CALL `sistemaelettoraleingsw`.`addElectionVote_categorico`(?, ?, ?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -68,6 +69,7 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public boolean addElezioneVote(ElezioneVote_CategoricoConPref referVote) {
+		LogHistory.getInstance().addLog(new LogElement(this, " addElezioneVote", "Aggiunta voto categorico con Preferenza nel DB"));
 		final String query = "CALL `sistemaelettoraleingsw`.`addElectionVote_categoricoConPref`(?, ?, ?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -103,6 +105,7 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public boolean addElezioneVote(ElezioneVote_Ordinale referVote) {
+		LogHistory.getInstance().addLog(new LogElement(this, " addElezioneVote", "Aggiunta voto ordinale nel DB"));
 		final String query = "CALL `sistemaelettoraleingsw`.`addElectionVote_ordinale`(?, ?, ?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -132,6 +135,7 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public boolean addReferendumVote(ReferendumVote referVote) {
+		LogHistory.getInstance().addLog(new LogElement(this, " addElezioneVote", "Aggiunta voto referendum nel DB"));
 		final String query = "CALL `sistemaelettoraleingsw`.`addReferendumVote`(?, ?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -163,14 +167,10 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public Boolean hasElettoreVotedForRef(Referendum ref) {
+		LogHistory.getInstance().addLog(new LogElement(this, " hasElettoreVotedForRef", "Check elettore ha votato per Referendum da DB"));
 		final String query = "SELECT `sistemaelettoraleingsw`.`hasElettoreVotedRef`(?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
-		
-		if(!SystemLoggedUser.getInstance().isElettore()) {
-			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un impiegato al voto",true));
-			throw new IllegalStateException("Impiegato cannot vote");
-		}
-		
+
 		try {
 			
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
@@ -193,13 +193,9 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public Boolean hasElettoreVotedForElez(Elezione ele) {
+		LogHistory.getInstance().addLog(new LogElement(this, " hasElettoreVotedForElez", "Check elettore ha votato per Elezione da DB"));
 		final String query = "SELECT `sistemaelettoraleingsw`.`hasElettoreVotedElez`(?, ?);";
 		Connection dbConn = DBConnector.getDbConnection();
-		
-		if(!SystemLoggedUser.getInstance().isElettore()) {
-			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un impiegato al voto",true));
-			throw new IllegalStateException("Impiegato cannot vote");
-		}
 		
 		try {
 			
@@ -222,10 +218,11 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public List<VotoReferendum_TB> getVotiReferendum(Referendum referendum) {
+		LogHistory.getInstance().addLog(new LogElement(this, " getVotiReferendum", "Ottenimento voti referendum da DB"));
 		final String query = "SELECT * FROM sistemaelettoraleingsw.votoreferendum v WHERE v.referendumId_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
-		if(!SystemLoggedUser.getInstance().isImpiegato()) {
+		if(!SystemLoggedUser.getInstance().isElettore()) {
 			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un elettore con queste funzioni",true));
 			throw new IllegalStateException("Elettore cannot ask voti");
 		}
@@ -260,10 +257,11 @@ public class VotazioneDao implements IVotazioneDao {
 
 	@Override
 	public List<ElezioneVote> getVotiElezione(Elezione elezione) {
+		LogHistory.getInstance().addLog(new LogElement(this, " getVotiElezione", "Ottenimento voti elezione da DB"));
 		
 		List<ElezioneVote> votiElezione = new ArrayList<ElezioneVote>();
 		
-		if(!SystemLoggedUser.getInstance().isImpiegato()) {
+		if(!SystemLoggedUser.getInstance().isElettore()) {
 			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un elettore con queste funzioni",true));
 			throw new IllegalStateException("Elettore cannot ask voti");
 		}
@@ -279,10 +277,11 @@ public class VotazioneDao implements IVotazioneDao {
 	}
 	
 	private List<VotoElezione_TB> getVotiElezioneTb(Elezione elezione){
+		
 		final String query = "SELECT * FROM sistemaelettoraleingsw.votoelezione WHERE elezione_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
-		if(!SystemLoggedUser.getInstance().isImpiegato()) {
+		if(!SystemLoggedUser.getInstance().isElettore()) {
 			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un elettore con queste funzioni",true));
 			throw new IllegalStateException("Elettore cannot ask voti");
 		}

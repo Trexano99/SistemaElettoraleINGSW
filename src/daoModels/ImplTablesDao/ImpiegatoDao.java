@@ -15,6 +15,7 @@ public class ImpiegatoDao implements IImpiegatoDao {
 
 	@Override
 	public Impiegato_TB get(String impiegatoId) {
+		LogHistory.getInstance().addLog(new LogElement(this, " get", "Richiesta DB dati impiegato"));
 		final String query = "SELECT * FROM `sistemaelettoraleingsw`.`impiegato` i WHERE i.idimpiegato = ?";
 		Connection dbConn = DBConnector.getDbConnection();
 		

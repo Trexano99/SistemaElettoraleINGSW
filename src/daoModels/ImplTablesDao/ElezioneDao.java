@@ -21,6 +21,7 @@ public class ElezioneDao implements IElezioneDao {
 
 	@Override
 	public boolean addNewElezione(NewElezione elezione) {
+		LogHistory.getInstance().addLog(new LogElement(this, " addNewElezione", "Aggiunta nel DB nuova elezione"));
 		final String query = "INSERT INTO `sistemaelettoraleingsw`.`elezione`(`nomeBreve`,`maggioranzaAssoluta`,`isClosed`,`isFinished`,`tipoElezione_fk`) VALUES (?,?,?,?,?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -33,7 +34,7 @@ public class ElezioneDao implements IElezioneDao {
 			preparedStmt.setBoolean(4, elezione.getIsFinished());
 			preparedStmt.setInt(5, elezione.getTipoElezione().ordinal());
 			
-			preparedStmt.executeQuery();
+			preparedStmt.executeUpdate();
 			
 			return true;
 			
@@ -46,6 +47,7 @@ public class ElezioneDao implements IElezioneDao {
 
 	@Override
 	public boolean removeElezione(Elezione elezione) {
+		LogHistory.getInstance().addLog(new LogElement(this, " removeElezione", "Rimozione dal DB di elezione"));
 		final String query = "DELETE FROM `sistemaelettoraleingsw`.`elezione` e WHERE e.id = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -54,7 +56,7 @@ public class ElezioneDao implements IElezioneDao {
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
 			preparedStmt.setInt(1, elezione.getId());
 			
-			preparedStmt.executeQuery();
+			preparedStmt.executeUpdate();
 			return true;
 			
 		} catch (SQLException e) {
@@ -66,6 +68,7 @@ public class ElezioneDao implements IElezioneDao {
 
 	@Override
 	public boolean updateElezione(ElezioneUpdater elezione) {
+		LogHistory.getInstance().addLog(new LogElement(this, " updateElezione", "Aggiornamento nel DB di elezione"));
 		final String query = "UPDATE `sistemaelettoraleingsw`.`elezione` SET `nomeBreve`=?,`maggioranzaAssoluta`=?,`isClosed`=?,`isFinished`=?,`tipoElezione_fk`=? WHERE `id` = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
@@ -84,7 +87,7 @@ public class ElezioneDao implements IElezioneDao {
 			preparedStmt.setInt(6, elezione.getId());
 	
 			
-			preparedStmt.executeQuery();
+			preparedStmt.executeUpdate();
 			return true;
 			
 		} catch (SQLException e) {
@@ -96,6 +99,7 @@ public class ElezioneDao implements IElezioneDao {
 
 	@Override
 	public List<Elezione_TB> getAllElezioni() {
+		LogHistory.getInstance().addLog(new LogElement(this, " getAllElezioni", "Richiesta a DB di tutte elezione"));
 		final String query = "SELECT * FROM `sistemaelettoraleingsw`.`elezione`;";
 		Connection dbConn = DBConnector.getDbConnection();
 		

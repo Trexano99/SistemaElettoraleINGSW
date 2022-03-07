@@ -15,7 +15,7 @@ public class ElettoreDao implements IElettoreDao {
 	
 	@Override
 	public Elettore_TB get(String elettoreId) {
-		
+		LogHistory.getInstance().addLog(new LogElement(this, " get", "Richiesta DB dati elettore"));
 		final String query = "SELECT * FROM `sistemaelettoraleingsw`.`elettore` e WHERE e.CodiceFiscale = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
