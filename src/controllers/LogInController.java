@@ -3,6 +3,8 @@ package controllers;
 
 import com.mysql.cj.exceptions.FeatureNotAvailableException;
 
+import auditing.LogElement;
+import auditing.LogHistory;
 import javaFX.GraphicControllers.LogInViewController;
 import useObject.utenze.Elettore;
 import useObject.utenze.Impiegato;
@@ -40,12 +42,14 @@ public class LogInController {
 	 * @param password		Password elettore registrato
 	 * @param logView		La view della login sulla quale verr� segnalato l'errore
 	 */
-	public static void attemptElettoreLogin(String username, String password, LogInViewController logView) {
+	public static boolean attemptElettoreLogin(String username, String password, LogInViewController logView) {
 		try {		
-			attemptGenericLogin (username, password, logView ,LogInType.Elettore);
+			return attemptGenericLogin (username, password, logView ,LogInType.Elettore);
 		}catch (IllegalArgumentException e){
+			LogHistory.getInstance().addLog(new LogElement(LogInController.class, "attemptElettoreLogin", "Parametri inaccettabili", true));
 			logView.signalError("CREDENTIALS FORMAT ERROR", "Username or password cannot be blank or whiteSpaces");
 		}
+		return false;
 	}
 	
 	/**
@@ -59,16 +63,18 @@ public class LogInController {
 	 * @param password		Password impiegato registrato
 	 * @param logView		La view della login sulla quale verr� segnalato l'errore
 	 */
-	public static void attemptImpiegatoLogin(String username, String password, LogInViewController logView) {
+	public static boolean attemptImpiegatoLogin(String username, String password, LogInViewController logView) {
 		
 		try {		
-			attemptGenericLogin (username, password, logView ,LogInType.Impiegato);
+			return attemptGenericLogin (username, password, logView ,LogInType.Impiegato);
 		}catch (IllegalArgumentException e){
+			LogHistory.getInstance().addLog(new LogElement(LogInController.class, "attemptImpiegatoLogin", "Parametri inaccettabili", true));
 			logView.signalError("CREDENTIALS FORMAT ERROR", "Username or password cannot be blank or whiteSpaces");
 		}
+		return false;
 	}
 	
-	private static void attemptGenericLogin(String username, String password, LogInViewController logView, LogInType type) {
+	private static boolean attemptGenericLogin(String username, String password, LogInViewController logView, LogInType type) {
 
 		
 		if(logView == null)
@@ -86,14 +92,14 @@ public class LogInController {
 			default:
 				throw new FeatureNotAvailableException("Type not supported");	
 			}
-			if(loginSuccess)
-				logView.confirmLogin();
-			else
+			if(!loginSuccess)
 				logView.denyLogin();
+			return loginSuccess;
 		} catch (Exception e) {
 			logView.signalError("SERVERSIDE ERROR", e.getStackTrace().toString());
 		}
 
+		return false;
 	}
 	
 	
