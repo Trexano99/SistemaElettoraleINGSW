@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import javafx.application.Platform;
+
 public class TimerTicker  {
 	
 	private Timer timer;
@@ -17,7 +19,7 @@ public class TimerTicker  {
 		for (ITimerObserver obs : observers) {
 			addObserver(obs);
 		}
-		timer.schedule(timerTask, 1, durata);
+		timer.schedule(timerTask,1, 1000);
 	}
 	
 	
@@ -31,14 +33,20 @@ public class TimerTicker  {
 	
 	private void timerTicked() {
 		for (ITimerObserver obs : observers) {
-			obs.thickedTimer(timer);
+			obs.thickedTimer(this);
+			if(seconds==0)
+				obs.endedTimer();
 		}
 	}
 	
 	private TimerTask timerTask = new TimerTask() {
-	    @Override
+		
+		@Override
 	    public void run() {
-	        timerTicked();
+			Platform.runLater(() -> {
+		    	seconds--;
+		        timerTicked();
+			});
 	    }
 	};
 	

@@ -33,8 +33,8 @@ public class Elettore extends Utente{
 	public static Boolean login(String username, String password) {
 		GenericUser_TB utente = new GenericUser_TB(username, password);
 		String userId = new GenericUserDao().loginElettore(utente);
-		if(userId!=null) {
-			LogHistory.getInstance().addLog(new LogElement(Elettore.class, "LoginError", "Error login for user: "+username));
+		if(userId==null) {
+			LogHistory.getInstance().addLog(new LogElement(Elettore.class, "LoginFailed", "Failed login for user: "+username));
 			return false;
 		}
 		LogHistory.getInstance().addLog(new LogElement(Elettore.class, "LoginSuccess", "Success login for user: "+username+"; His id is: "+userId));

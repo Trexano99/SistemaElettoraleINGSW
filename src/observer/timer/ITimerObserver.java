@@ -4,6 +4,8 @@ import java.util.Timer;
 
 public interface ITimerObserver {
 
-	public void thickedTimer(Timer timer);
+	public void thickedTimer(TimerTicker timer);
+	
+	public void endedTimer();
 	
 }
