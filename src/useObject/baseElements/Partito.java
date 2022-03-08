@@ -4,9 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import daoModels.DbTablesRapresentation.Candidato_TB;
 import daoModels.DbTablesRapresentation.Partito_TB;
-import daoModels.ImplTablesDao.CandidatoDao;
 import daoModels.ImplTablesDao.PartitoDao;
 import useObject.voteElements.Elezione;
 

@@ -33,11 +33,11 @@ public class ReferendumDao implements IReferendumDao {
 			preparedStmt.setString(1, referendum.getNomeBreve());
 			preparedStmt.setString(2, referendum.getQuesito());
 			preparedStmt.setBoolean(3, referendum.getWithQuorum());
-			preparedStmt.setBoolean(3, referendum.getIsClosed());
-			preparedStmt.setBoolean(4, referendum.getIsFinished());
-			preparedStmt.setInt(5, Arrays.asList(TipologiaElezione.values()).indexOf(TipologiaElezione.Referendum));
+			preparedStmt.setBoolean(4, referendum.getIsClosed());
+			preparedStmt.setBoolean(5, referendum.getIsFinished());
+			preparedStmt.setInt(6, Arrays.asList(TipologiaElezione.values()).indexOf(TipologiaElezione.Referendum));
 			
-			preparedStmt.executeQuery();
+			preparedStmt.executeUpdate();
 			
 			return true;
 			
@@ -59,7 +59,7 @@ public class ReferendumDao implements IReferendumDao {
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
 			preparedStmt.setInt(1, referendum.getId());
 			
-			preparedStmt.executeQuery();
+			preparedStmt.executeUpdate();
 			
 			return true;
 			
@@ -81,13 +81,13 @@ public class ReferendumDao implements IReferendumDao {
 			
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
 			preparedStmt.setString(1, referendum.getNome());
-			preparedStmt.setString(1, referendum.getQuesito());
-			preparedStmt.setBoolean(2, referendum.getWithQuorum());
-			preparedStmt.setBoolean(3, referendum.isClosed());
-			preparedStmt.setBoolean(4, referendum.isFinished());
-			preparedStmt.setInt(5, referendum.getId());
+			preparedStmt.setString(2, referendum.getQuesito());
+			preparedStmt.setBoolean(3, referendum.getWithQuorum());
+			preparedStmt.setBoolean(4, referendum.isClosed());
+			preparedStmt.setBoolean(5, referendum.isFinished());
+			preparedStmt.setInt(6, referendum.getId());
 			
-			preparedStmt.executeQuery();
+			preparedStmt.executeUpdate();
 			return true;
 			
 		} catch (SQLException e) {
@@ -100,7 +100,7 @@ public class ReferendumDao implements IReferendumDao {
 
 	@Override
 	public List<Referendum_TB> getAllReferendums() {
-		LogHistory.getInstance().addLog(new LogElement(this, " updateReferendum", "Richiesta tutti referendum a DB"));
+		LogHistory.getInstance().addLog(new LogElement(this, " getAllReferendums", "Richiesta tutti referendum a DB"));
 		final String query = "SELECT * FROM `sistemaelettoraleingsw`.`referendum`;";
 		Connection dbConn = DBConnector.getDbConnection();
 		

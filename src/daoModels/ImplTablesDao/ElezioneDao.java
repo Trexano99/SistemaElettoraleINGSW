@@ -21,8 +21,8 @@ public class ElezioneDao implements IElezioneDao {
 
 	@Override
 	public boolean addNewElezione(NewElezione elezione) {
-		LogHistory.getInstance().addLog(new LogElement(this, " addNewElezione", "Aggiunta nel DB nuova elezione"));
-		final String query = "INSERT INTO `sistemaelettoraleingsw`.`elezione`(`nomeBreve`,`maggioranzaAssoluta`,`isClosed`,`isFinished`,`tipoElezione_fk`) VALUES (?,?,?,?,?);";
+		LogHistory.getInstance().addLog(new LogElement(this, " addElezioneVote", "Aggiunta voto ordinale nel DB"));
+		final String query = "CALL `sistemaelettoraleingsw`.`addNewElezione`(?,?,?,?,?,?,?);";
 		Connection dbConn = DBConnector.getDbConnection();
 		
 		try {
@@ -33,6 +33,8 @@ public class ElezioneDao implements IElezioneDao {
 			preparedStmt.setBoolean(3, elezione.getIsClosed());
 			preparedStmt.setBoolean(4, elezione.getIsFinished());
 			preparedStmt.setInt(5, elezione.getTipoElezione().ordinal());
+			preparedStmt.setString(6, elezione.getListaPartitiDbFormat());
+			preparedStmt.setString(7, elezione.getListaCandidatiDbFormat());
 			
 			preparedStmt.executeUpdate();
 			
@@ -44,6 +46,7 @@ public class ElezioneDao implements IElezioneDao {
 		
 		return false;
 	}
+
 
 	@Override
 	public boolean removeElezione(Elezione elezione) {
@@ -69,25 +72,28 @@ public class ElezioneDao implements IElezioneDao {
 	@Override
 	public boolean updateElezione(ElezioneUpdater elezione) {
 		LogHistory.getInstance().addLog(new LogElement(this, " updateElezione", "Aggiornamento nel DB di elezione"));
-		final String query = "UPDATE `sistemaelettoraleingsw`.`elezione` SET `nomeBreve`=?,`maggioranzaAssoluta`=?,`isClosed`=?,`isFinished`=?,`tipoElezione_fk`=? WHERE `id` = ?;";
+		final String query = "CALL `sistemaelettoraleingsw`.`updateElezione`(?,?,?,?,?,?,?,?);";
 		Connection dbConn = DBConnector.getDbConnection();
+		
+		if(elezione.getTipoElezione()==TipologiaElezione.Referendum){
+			LogHistory.getInstance().addLog(new LogElement(this, "UpdatingElezioneError", "Trasformazione di elezione in referendum", true));
+			throw new IllegalStateException("Non si può trasformare una elezione in un referendum");
+		}
 		
 		try {
 			
 			PreparedStatement preparedStmt = dbConn.prepareStatement(query);
-			preparedStmt.setString(1, elezione.getNome());
-			preparedStmt.setBoolean(2, elezione.getMaggioranzaAssoluta());
-			preparedStmt.setBoolean(3, elezione.isClosed());
-			preparedStmt.setBoolean(4, elezione.isFinished());
-			if(elezione.getTipoElezione()==TipologiaElezione.Referendum){
-				LogHistory.getInstance().addLog(new LogElement(this, "UpdatingElezioneError", "Trasformazione di elezione in referendum", true));
-				throw new IllegalStateException("Non si può trasformare una elezione in un referendum");
-			}
-			preparedStmt.setInt(5, elezione.getTipoElezione().ordinal());
-			preparedStmt.setInt(6, elezione.getId());
+			preparedStmt.setInt(1, elezione.getId());
+			preparedStmt.setString(2, elezione.getNome());
+			preparedStmt.setBoolean(3, elezione.getMaggioranzaAssoluta());
+			preparedStmt.setBoolean(4, elezione.isClosed());
+			preparedStmt.setBoolean(5, elezione.isFinished());
+			preparedStmt.setInt(6, elezione.getTipoElezione().ordinal());
+			preparedStmt.setString(7, elezione.getListaPartitiDbFormat());
+			preparedStmt.setString(8, elezione.getListaCandidatiDbFormat());
 	
 			
-			preparedStmt.executeUpdate();
+			preparedStmt.executeQuery();
 			return true;
 			
 		} catch (SQLException e) {

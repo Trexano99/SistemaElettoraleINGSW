@@ -7,7 +7,6 @@ import daoModels.ElezioneVote_Categorico;
 import daoModels.ElezioneVote_CategoricoConPref;
 import daoModels.ElezioneVote_Ordinale;
 import daoModels.ReferendumVote;
-import daoModels.DbTablesRapresentation.VotoElezione_TB;
 import daoModels.DbTablesRapresentation.VotoReferendum_TB;
 import useObject.voteElements.Elezione;
 import useObject.voteElements.Referendum;

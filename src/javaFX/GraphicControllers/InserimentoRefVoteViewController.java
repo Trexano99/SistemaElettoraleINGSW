@@ -1,21 +1,18 @@
 package javaFX.GraphicControllers;
 
-import java.util.Timer;
-
-import auditing.LogElement;
-import auditing.LogHistory;
-import controllers.InserimentoVotoReferendumController;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+
+import auditing.LogElement;
+import auditing.LogHistory;
+import controllers.InserimentoVotoReferendumController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;

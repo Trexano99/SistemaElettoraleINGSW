@@ -112,7 +112,16 @@ public class LogInViewController{
     	else {
     		message1.setVisible(false);
     		if(LogInController.attemptImpiegatoLogin(lblName.getText(), lblPassword.getText(), this)) {
-    			
+    			try {
+       			 Stage stageTheEventSourceNodeBelongs = (Stage) ((Node)event.getSource()).getScene().getWindow();
+       			 Parent root = FXMLLoader.load(getClass().getResource(ImpiegatoMainViewController.RESOURCE));
+					
+       			 stageTheEventSourceNodeBelongs.setTitle(ImpiegatoMainViewController.TITOLO);
+       			 stageTheEventSourceNodeBelongs.setScene(new Scene(root, ImpiegatoMainViewController.WIDTH, ImpiegatoMainViewController.HEIGTH));
+       			 stageTheEventSourceNodeBelongs.show();
+				} catch (IOException e) {
+					LogHistory.getInstance().addLog(new LogElement(this, "handleLogin", "Fail changing scene", true));
+				}
     		}
     	}
 

@@ -30,7 +30,7 @@ public class ImpiegatoDao implements IImpiegatoDao {
 			
 			reSet.getString(2);
 			
-			return new Impiegato_TB(impiegatoId, reSet.getString(1), reSet.getString(2));
+			return new Impiegato_TB(impiegatoId, reSet.getString(2), reSet.getString(3));
 			
 		} catch (SQLException e) {
 			LogHistory.getInstance().addLog(new LogElement(this, "SQLException", e.getSQLState(), true));

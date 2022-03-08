@@ -10,7 +10,6 @@ import java.util.List;
 import auditing.LogElement;
 import auditing.LogHistory;
 import daoModels.DBConnector;
-import daoModels.DbTablesRapresentation.Candidato_TB;
 import daoModels.DbTablesRapresentation.Partito_TB;
 import daoModels.InterfaceTablesDao.IPartitoDao;
 import useObject.voteElements.Elezione;

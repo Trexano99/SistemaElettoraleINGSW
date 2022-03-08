@@ -10,12 +10,13 @@ public class EsitoReferendum extends EsitoVotazione {
 
 	private int votiPositivi;
 	private int votiNegativi;
+	private boolean isValid;
 	
-	
-	private EsitoReferendum(int votiPositivi, int votiNegativi,int votiSchedeBianche) {
+	private EsitoReferendum(int votiPositivi, int votiNegativi,int votiSchedeBianche, boolean isValid) {
 		super(votiSchedeBianche, votiPositivi+votiNegativi+votiSchedeBianche);
 		this.votiPositivi = votiPositivi;
 		this.votiNegativi = votiNegativi;
+		this.isValid = isValid;
 	}
 	
 	public static EsitoReferendum getEsitoReferendum(Referendum referendum) {
@@ -33,7 +34,10 @@ public class EsitoReferendum extends EsitoVotazione {
 				votiNeg++;
 		}
 		
-		return new EsitoReferendum(votiPos, votiNeg, votiBia);
+		if(referendum.withQuorum()&&votiBia>=(votiPos+votiNeg))
+			return new EsitoReferendum(votiPos, votiNeg, votiBia, false);
+		return new EsitoReferendum(votiPos, votiNeg, votiBia, true);
+		
 	}
 
 	public int getVotiPositivi() {
@@ -42,5 +46,10 @@ public class EsitoReferendum extends EsitoVotazione {
 	public int getVotiNegativi() {
 		return votiNegativi;
 	}
+
+	public boolean isValid() {
+		return isValid;
+	}
+	
 	
 }

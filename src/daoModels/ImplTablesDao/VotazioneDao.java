@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +15,6 @@ import daoModels.ElezioneVote_Categorico;
 import daoModels.ElezioneVote_CategoricoConPref;
 import daoModels.ElezioneVote_Ordinale;
 import daoModels.ReferendumVote;
-import daoModels.DbTablesRapresentation.Candidato_TB;
-import daoModels.DbTablesRapresentation.Elezione_TB;
-import daoModels.DbTablesRapresentation.Partito_TB;
 import daoModels.DbTablesRapresentation.VotoElezione_TB;
 import daoModels.DbTablesRapresentation.VotoReferendum_TB;
 import daoModels.InterfaceTablesDao.IVotazioneDao;
@@ -27,7 +23,6 @@ import useObject.baseElements.Candidato;
 import useObject.baseElements.Partito;
 import useObject.voteElements.Elezione;
 import useObject.voteElements.Referendum;
-import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class VotazioneDao implements IVotazioneDao {
 
@@ -222,7 +217,7 @@ public class VotazioneDao implements IVotazioneDao {
 		final String query = "SELECT * FROM sistemaelettoraleingsw.votoreferendum v WHERE v.referendumId_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
-		if(!SystemLoggedUser.getInstance().isElettore()) {
+		if(SystemLoggedUser.getInstance().isElettore()) {
 			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un elettore con queste funzioni",true));
 			throw new IllegalStateException("Elettore cannot ask voti");
 		}
@@ -261,7 +256,7 @@ public class VotazioneDao implements IVotazioneDao {
 		
 		List<ElezioneVote> votiElezione = new ArrayList<ElezioneVote>();
 		
-		if(!SystemLoggedUser.getInstance().isElettore()) {
+		if(SystemLoggedUser.getInstance().isElettore()) {
 			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un elettore con queste funzioni",true));
 			throw new IllegalStateException("Elettore cannot ask voti");
 		}
@@ -281,7 +276,7 @@ public class VotazioneDao implements IVotazioneDao {
 		final String query = "SELECT * FROM sistemaelettoraleingsw.votoelezione WHERE elezione_fk = ?;";
 		Connection dbConn = DBConnector.getDbConnection();
 		
-		if(!SystemLoggedUser.getInstance().isElettore()) {
+		if(SystemLoggedUser.getInstance().isElettore()) {
 			LogHistory.getInstance().addLog(new LogElement(this, "InstanceError", "Non ci si aspetta un elettore con queste funzioni",true));
 			throw new IllegalStateException("Elettore cannot ask voti");
 		}

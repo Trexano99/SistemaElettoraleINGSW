@@ -19,7 +19,6 @@ import useObject.General.SystemLoggedUser;
 import useObject.voteElements.Elezione;
 import useObject.voteElements.Referendum;
 import useObject.voteElements.Votazione;
-import useObject.voteElements.results.EsitoReferendum;
 
 public class Impiegato extends Utente {
 
@@ -31,7 +30,7 @@ public class Impiegato extends Utente {
 
 		GenericUser_TB utente = new GenericUser_TB(username, password);
 		String userId = new GenericUserDao().loginImpiegato(utente);
-		if(userId!=null) {
+		if(userId==null) {
 			LogHistory.getInstance().addLog(new LogElement(Impiegato.class, "LoginError", "Error login for user: "+username));
 			return false;
 		}
@@ -82,5 +81,7 @@ public class Impiegato extends Utente {
 		LogHistory.getInstance().addLog(new LogElement(this, "inserisciReferendum", "Adding new referendum"));
 		return new ReferendumDao().addNewReferendum(referendumDaInserire);
 	}	
+	
+	
 	
 }

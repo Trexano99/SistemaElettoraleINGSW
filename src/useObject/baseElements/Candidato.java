@@ -5,6 +5,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import daoModels.DbTablesRapresentation.Candidato_TB;
 import daoModels.ImplTablesDao.CandidatoDao;
@@ -71,6 +72,27 @@ public class Candidato {
 		DateFormat df = new SimpleDateFormat("dd-MM-yyyy");
 		return nome + " " + cognome + " (" + df.format(dataNascita) + ")";
 	}
+
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Candidato other = (Candidato) obj;
+		return id == other.id;
+	}
+	
+	
 	
 	
 }

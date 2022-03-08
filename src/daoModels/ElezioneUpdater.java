@@ -1,12 +1,18 @@
 package daoModels;
 
+import java.util.List;
+
 import auditing.LogElement;
 import auditing.LogHistory;
+import useObject.baseElements.Candidato;
+import useObject.baseElements.Partito;
 import useObject.voteElements.Elezione;
 import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class ElezioneUpdater {
 
+	private Elezione elezRef;
+	
 	private int id;
 	
 	private String nome;
@@ -14,6 +20,8 @@ public class ElezioneUpdater {
 	private boolean isFinished;
 	private TipologiaElezione tipoElezione;
 	private Boolean maggioranzaAssoluta;
+	private List<Candidato> candidatiProposti=null;
+	private List<Partito> partitiProposti=null;
 	
 	public ElezioneUpdater(Elezione elezione) {
 		id = elezione.getId();
@@ -22,6 +30,7 @@ public class ElezioneUpdater {
 		isFinished = elezione.isFinished();
 		tipoElezione = elezione.getTipoElezione();
 		maggioranzaAssoluta = elezione.getMaggioranzaAssoluta();
+		elezRef = elezione;
 	}
 
 	public String getNome() {
@@ -71,7 +80,50 @@ public class ElezioneUpdater {
 	public int getId() {
 		return id;
 	}
+
+	public List<Candidato> getCandidatiProposti() {
+		if(candidatiProposti==null)
+			return Candidato.getAllCandidatiElezione(elezRef);
+		return candidatiProposti;
+	}
+
+	public List<Partito> getPartitiProposti() {
+		if(candidatiProposti==null)
+			return Partito.getAllPartitiElezione(elezRef);
+		return partitiProposti;
+	}
+
+	public void setCandidatiProposti(List<Candidato> candidatiProposti) {
+		this.candidatiProposti = candidatiProposti;
+	}
+
+	public void setPartitiProposti(List<Partito> partitiProposti) {
+		this.partitiProposti = partitiProposti;
+	}
 	
+	public String getListaCandidatiDbFormat() {
+		if(getCandidatiProposti()  == null ||getCandidatiProposti().size()==0)
+			return "[]";
+		StringBuilder sb = new StringBuilder("[");
+		for (Candidato candidato : getCandidatiProposti()) {
+			sb.append(candidato.getId()+",");
+		}
+		String finale = sb.toString();
+		return finale.substring(0,finale.length()-1)+"]";
+		
+	}
+	
+	public String getListaPartitiDbFormat() {
+		if(getPartitiProposti() == null ||getPartitiProposti().size()==0)
+			return "[]";
+		StringBuilder sb = new StringBuilder("[");
+		for (Partito partito : getPartitiProposti()) {
+			sb.append(partito.getId()+",");
+		}
+		String finale = sb.toString();
+		return finale.substring(0,finale.length()-1)+"]";
+		
+	}
 	
 	
 }

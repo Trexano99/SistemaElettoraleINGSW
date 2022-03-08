@@ -8,7 +8,6 @@ import java.util.Optional;
 import auditing.LogElement;
 import auditing.LogHistory;
 import controllers.InserimentoVotoCatController;
-import controllers.InserimentoVotoReferendumController;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -25,7 +24,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.SplitPane;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import observer.timer.ITimerObserver;
@@ -33,8 +31,6 @@ import observer.timer.TimerTicker;
 import useObject.baseElements.Candidato;
 import useObject.baseElements.Partito;
 import useObject.voteElements.Elezione;
-import useObject.voteElements.Referendum;
-import useObject.voteElements.Votazione;
 import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class InserimentoCatVoteViewController implements ITimerObserver, IBaseVoteView {

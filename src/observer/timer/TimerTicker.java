@@ -27,6 +27,7 @@ public class TimerTicker  {
 		this.observers.add(obs);
 	}
 	
+	@SuppressWarnings("unused")
 	private void removeObserver(ITimerObserver obs) {
 		this.observers.remove(obs);
 	}
@@ -57,6 +58,7 @@ public class TimerTicker  {
 		return String.format("%02d:%02d", (seconds % 3600)/60, seconds%60);
 	}
 	
+	@SuppressWarnings("unused")
 	private static TimerTicker instance;
 
 	public static void createTimer(int durata, List<ITimerObserver>observers) {

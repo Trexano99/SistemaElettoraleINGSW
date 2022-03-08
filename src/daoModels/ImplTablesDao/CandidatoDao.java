@@ -11,12 +11,9 @@ import auditing.LogElement;
 import auditing.LogHistory;
 import daoModels.DBConnector;
 import daoModels.DbTablesRapresentation.Candidato_TB;
-import daoModels.DbTablesRapresentation.Partito_TB;
-import daoModels.DbTablesRapresentation.Referendum_TB;
 import daoModels.InterfaceTablesDao.ICandidatoDao;
 import useObject.baseElements.Partito;
 import useObject.voteElements.Elezione;
-import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class CandidatoDao implements ICandidatoDao {
 
