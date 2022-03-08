@@ -1,6 +1,5 @@
 package controllers;
 
-import javaFX.GraphicControllers.ElettoreMainViewController;
 import javaFX.GraphicControllers.InserimentoRefVoteViewController;
 import useObject.General.SystemLoggedUser;
 import useObject.utenze.Elettore;
@@ -35,12 +34,12 @@ public class InserimentoVotoReferendumController implements IVoteController {
 		
 		StringBuilder strB = new StringBuilder();
 		strB.append("Hai votato per il referendum "+referendum.getNome()+" con il voto: ");
-		if(scelta==true)
-			strB.append("SI");
+		if(scelta==null)
+			strB.append("VOTO BIANCO");
 		else if (scelta == false)
 			strB.append("NO");
 		else
-			strB.append("VOTO BIANCO");
+			strB.append("SI");
 		if(view.chiediConferma("Si vuole confermare il voto?", strB.toString())) {
 			registerVote(scelta);
 			view.getPreviousPage();
