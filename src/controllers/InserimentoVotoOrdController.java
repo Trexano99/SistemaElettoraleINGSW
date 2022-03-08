@@ -4,7 +4,6 @@ import java.util.List;
 
 import auditing.LogElement;
 import auditing.LogHistory;
-import javaFX.GraphicControllers.InserimentoCatVoteViewController;
 import javaFX.GraphicControllers.InserimentoOrdVoteViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,7 +12,6 @@ import useObject.baseElements.Candidato;
 import useObject.baseElements.Partito;
 import useObject.utenze.Elettore;
 import useObject.voteElements.Elezione;
-import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class InserimentoVotoOrdController implements IVoteController {
 

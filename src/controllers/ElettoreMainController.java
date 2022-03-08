@@ -2,12 +2,9 @@ package controllers;
 
 import auditing.LogElement;
 import auditing.LogHistory;
-import controllers.LogInController.LogInType;
 import javaFX.GraphicControllers.ElettoreMainViewController;
-import javaFX.GraphicControllers.LogInViewController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import useObject.General.SystemLoggedUser;
 import useObject.utenze.Elettore;
 import useObject.voteElements.Elezione;
@@ -65,7 +62,6 @@ public class ElettoreMainController  {
 	    int aLen = a.length;
 	    int bLen = b.length;
 
-	    @SuppressWarnings("unchecked")
 	    Votazione[] c = new Votazione[aLen+bLen];
 	    System.arraycopy(a, 0, c, 0, aLen);
 	    System.arraycopy(b, 0, c, aLen, bLen);
