@@ -11,6 +11,13 @@ public class SystemLoggedUser {
 	
 	private SystemLoggedUser() {}
 	
+	/*@ requires instance == null;
+	 @ assignable instance;
+	 @ 
+	 @ also
+	 @ 
+	 @ ensures \result == instance;
+	 @*/
 	public static SystemLoggedUser getInstance() {
 		if (instance==null)
 			instance = new SystemLoggedUser();
@@ -20,6 +27,10 @@ public class SystemLoggedUser {
 
 	private Utente utenteLoggato;
 	
+	/*@ requires user != null;
+	 @ assignable utenteLoggato;
+	 @ ensures utenteLoggato = user;
+	 @*/
 	public void setUtenteLoggato (Utente user) {
 		utenteLoggato = user;
 	}
@@ -35,7 +46,9 @@ public class SystemLoggedUser {
 			return true;
 		return false;
 	}
-
+	
+	/*@ ensures \result == utenteLoggato;
+	 @*/
 	public Utente getUtenteLoggato() {
 		return utenteLoggato;
 	}
