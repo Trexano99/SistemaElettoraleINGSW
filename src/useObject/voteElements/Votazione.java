@@ -5,12 +5,18 @@ public abstract class Votazione {
 	
 	private int id;
 	
-	protected String nome;
+	protected /*@not_null@*/String nome;
 	protected boolean isClosed;
 	protected boolean isFinished;
-	protected TipologiaElezione tipoElezione;
+	protected /*@not_null@*/TipologiaElezione tipoElezione;
 	private Boolean hasLoggedElettoreVotedFor = null;
-	
+	/*@
+	 @ assignable id;
+	 @ assignable nome;
+	 @ assignable isClosed;
+	 @ assignable isFinished;
+	 @ assignable tipoElezione;
+	 @*/
 	protected Votazione(int id, String nome, boolean isClosed, boolean isFinished, TipologiaElezione tipoElezione) {
 		this.id = id;
 		this.nome = nome;
@@ -26,19 +32,28 @@ public abstract class Votazione {
 		VotazioneOrdinale		
 	}
 
-
+	/*@ ensures \result == id;
+	 @*/
 	public int getId() {
 		return id;
 	}
+	/*@ ensures \result == nome;
+	 @*/
 	public String getNome() {
 		return nome;
 	}
+	/*@ ensures \result == isClosed;
+	 @*/
 	public boolean isClosed() {
 		return isClosed;
 	}
+	/*@ ensures \result == isFinished;
+	 @*/
 	public boolean isFinished() {
 		return isFinished;
 	}
+	/*@ ensures \result == tipoElezione;
+	 @*/
 	public TipologiaElezione getTipoElezione() {
 		return tipoElezione;
 	}
