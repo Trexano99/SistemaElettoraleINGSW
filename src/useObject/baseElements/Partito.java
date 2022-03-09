@@ -10,26 +10,57 @@ import useObject.voteElements.Elezione;
 
 public class Partito {
 	
-	private int id;
-	private String nome;
-	private List<Candidato> candidatiPartito = new ArrayList<Candidato>();
-	
+	private  /*@ spec_public @ */ int id;
+	private  /*@ spec_public @ */String nome;
+	private  /*@ spec_public @ */List<Candidato> candidatiPartito = new ArrayList<Candidato>();
+	/*
+	 * @ requires id != null;
+	 * 
+	 * @ requires nome != null;
+	 * 
+	 * @
+	 * 
+	 * @ assignable id;
+	 * 
+	 * @ assignable nome;
+	 * 
+	 * @
+	 */
 	private Partito(int id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
 	}
-
+	/*
+	 * @ ensures \result == id;
+	 * 
+	 * @
+	 */
 	public int getId() {
 		return id;
 	}
+	/*
+	 * @ ensures \result == nome;
+	 * @
+	 */
 	public String getNome() {
 		return nome;
 	}
+	/*
+	 * @ ensures \result == candidatiPartito;
+	 * 
+	 * @
+	 */
 	public List<Candidato> getCandidatiPartito() {
 		return candidatiPartito;
 	}
-	
+	/*
+	 * @ assignable candidatiPartito;
+	 * 
+	 * @ ensures candidatiPartito == candidati;
+	 * 
+	 * @
+	 */
 	private void addPartitoCandidati(List<Candidato> candidati) {
 		this.candidatiPartito = candidati;
 	}
