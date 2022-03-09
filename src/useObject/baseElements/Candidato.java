@@ -13,12 +13,17 @@ import useObject.voteElements.Elezione;
 
 public class Candidato {
 	
-	private int id;
+	private /*@ not_null @*/int id;
 	
-	private String nome, cognome;
-	private Date dataNascita;
+	private /*@ not_null @*/ String nome, /*@ not_null @*/ cognome;
+	private /*@ not_null @*/ Date dataNascita;
 	
-	
+	/*@ 
+	 @ assignable id;
+	 @ assignable nome;
+	 @ assignable cognome;
+	 @ assignable dataNascita;
+	 @*/
 	private Candidato(int id, String nome, String cognome, Date dataNascita) {
 		super();
 		this.id = id;
@@ -28,16 +33,31 @@ public class Candidato {
 	}
 
 
-
+	/*@ ensures \result == id;
+	 @*/
+	/*{Context Candidato:: getId()
+	 * post: result id}*/
 	public int getId() {
 		return id;
 	}
+	/*@ ensures \result == nome;
+	 @*/
+	/*{Context Candidato:: getNome()
+	 * post: result nome}*/
 	public String getNome() {
 		return nome;
 	}
+	/*@ ensures \result == cognome;
+	 @*/
+	/*Context Candidato:: getCognome()
+	 * post: result cognome*/
 	public String getCognome() {
 		return cognome;
 	}
+	/*@ ensures \result == dataNascita;
+	  @*/
+	/*Context Candidato:: getDataNascita()
+	 * post: result dataNascita*/
 	public Date getDataNascita() {
 		return dataNascita;
 	}
