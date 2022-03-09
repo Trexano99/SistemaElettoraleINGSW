@@ -24,7 +24,11 @@ import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class Elettore extends Utente{
 	
-
+	/*
+	 @ assignable id;
+	 @ assignable nome;
+	 @ assignable cognome;
+	 @*/
 	private Elettore(String id, String nome, String cognome) {
 		super(id, nome, cognome);
 	}
