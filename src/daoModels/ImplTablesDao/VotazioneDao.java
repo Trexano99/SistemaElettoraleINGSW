@@ -9,7 +9,7 @@ import java.util.List;
 
 import auditing.LogElement;
 import auditing.LogHistory;
-import daoModels.DBConnector;
+import dBUtility.DBConnector;
 import daoModels.ElezioneVote;
 import daoModels.ElezioneVote_Categorico;
 import daoModels.ElezioneVote_CategoricoConPref;

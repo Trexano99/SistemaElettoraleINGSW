@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import auditing.LogElement;
 import auditing.LogHistory;
-import daoModels.DBConnector;
+import dBUtility.DBConnector;
 import daoModels.DbTablesRapresentation.Elettore_TB;
 import daoModels.InterfaceTablesDao.IElettoreDao;
 

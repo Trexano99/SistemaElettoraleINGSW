@@ -2,7 +2,7 @@ package javaFX;
 
 import java.sql.SQLException;
 
-import daoModels.DBConnector;
+import dBUtility.DBConnector;
 import javaFX.GraphicControllers.LogInViewController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

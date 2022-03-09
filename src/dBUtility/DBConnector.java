@@ -1,4 +1,4 @@
-package daoModels;
+package dBUtility;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

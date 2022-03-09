@@ -9,7 +9,7 @@ import java.util.List;
 
 import auditing.LogElement;
 import auditing.LogHistory;
-import daoModels.DBConnector;
+import dBUtility.DBConnector;
 import daoModels.DbTablesRapresentation.Candidato_TB;
 import daoModels.InterfaceTablesDao.ICandidatoDao;
 import useObject.baseElements.Partito;
