@@ -14,6 +14,7 @@ import daoModels.ImplTablesDao.VotazioneDao;
 import useObject.baseElements.Candidato;
 import useObject.baseElements.Partito;
 import useObject.voteElements.Elezione;
+import useObject.voteElements.Votazione.TipologiaElezione;
 
 public class EsitoElezione extends EsitoVotazione {
 
@@ -55,14 +56,14 @@ public class EsitoElezione extends EsitoVotazione {
 						 if(votiCandidati.containsKey(candidati.get(i)))
 							 votiCandidati.put(candidati.get(i), votiCandidati.get(candidati.get(i))+1);
 						 else
-							 votiCandidati.put(candidati.get(i), 1.0);
+							 votiCandidati.put(candidati.get(i), 1./(i+1.));
 					 } 
 					 List<Partito> partiti = voto.getPartitiVotati();
 					 for (int i=0; i<partiti.size();i++) {
 						 if(votiPartiti.containsKey(partiti.get(i)))
 							 votiPartiti.put(partiti.get(i), votiPartiti.get(partiti.get(i))+1);
 						 else
-							 votiPartiti.put(partiti.get(i), 1.0);
+							 votiPartiti.put(partiti.get(i), 1./(i+1.));
 					 } 
 					 break;
 				}
@@ -72,14 +73,14 @@ public class EsitoElezione extends EsitoVotazione {
 						 if(votiCandidati.containsKey(candidati.get(i)))
 							 votiCandidati.put(candidati.get(i), votiCandidati.get(candidati.get(i))+1./(i+1.));
 						 else
-							 votiCandidati.put(candidati.get(i), 1.0);
+							 votiCandidati.put(candidati.get(i), 1./(i+1.));
 					 } 
 					 List<Partito> partiti = voto.getPartitiVotati();
 					 for (int i=0; i<partiti.size();i++) {
 						 if(votiPartiti.containsKey(partiti.get(i)))
 							 votiPartiti.put(partiti.get(i), votiPartiti.get(partiti.get(i))+1./(i+1.));
 						 else
-							 votiPartiti.put(partiti.get(i), 1.0);
+							 votiPartiti.put(partiti.get(i), 1./(i+1.));
 					 } 
 					 break;
 				}
@@ -106,8 +107,88 @@ public class EsitoElezione extends EsitoVotazione {
 		
 	}
 	
+	/*
+	 * Creato a parte poichè non instaziabile Elezione senza prendere elementi da DB
+	 * Il corpo del metodo è stato mantenuto il medesimo ma ivece di utilizzare i 
+	 * valori presenti in Elezione sono stati aggiunti i medesimi parametri.
+	 * !!!DA UTILIZZARE SOLO CON FINALITA' DI TESTING!!!
+	 */
+	public static EsitoElezione getEsitoElezioneForJUnitTesting(
+			List<ElezioneVote> voti,
+			TipologiaElezione tipologiElezione,
+			Elezione elezione) {
+		int schedeBianche = 0, votiTotali = 0;
+		HashMap<Partito, Double> votiPartiti = new HashMap<Partito, Double>();
+		HashMap<Candidato, Double> votiCandidati = new HashMap<Candidato, Double>();
+		for (ElezioneVote voto : voti) {
+			votiTotali++;
+			if((voto.getCandidatiVotati()==null && voto.getPartitiVotati()==null)||
+					(voto.getCandidatiVotati().size()== 0 && voto.getPartitiVotati().size()==0))
+				schedeBianche++;
+			else {
+				switch(tipologiElezione) {
+				case VotazioneCategorica:
+				case VotazioneCategoricaConPref:{
+					List<Candidato> candidati = voto.getCandidatiVotati();
+					 for (int i=0; i<candidati.size();i++) {
+						 if(votiCandidati.containsKey(candidati.get(i)))
+							 votiCandidati.put(candidati.get(i), votiCandidati.get(candidati.get(i))+1);
+						 else
+							 votiCandidati.put(candidati.get(i), 1./(i+1.));
+					 } 
+					 List<Partito> partiti = voto.getPartitiVotati();
+					 for (int i=0; i<partiti.size();i++) {
+						 if(votiPartiti.containsKey(partiti.get(i)))
+							 votiPartiti.put(partiti.get(i), votiPartiti.get(partiti.get(i))+1);
+						 else
+							 votiPartiti.put(partiti.get(i), 1./(i+1.));
+					 } 
+					 break;
+				}
+				case VotazioneOrdinale:{
+					List<Candidato> candidati = voto.getCandidatiVotati();
+					 for (int i=0; i<candidati.size();i++) {
+						 if(votiCandidati.containsKey(candidati.get(i)))
+							 votiCandidati.put(candidati.get(i), votiCandidati.get(candidati.get(i))+1./(i+1.));
+						 else
+							 votiCandidati.put(candidati.get(i), 1./(i+1.));
+					 } 
+					 List<Partito> partiti = voto.getPartitiVotati();
+					 for (int i=0; i<partiti.size();i++) {
+						 if(votiPartiti.containsKey(partiti.get(i)))
+							 votiPartiti.put(partiti.get(i), votiPartiti.get(partiti.get(i))+1./(i+1.));
+						 else
+							 votiPartiti.put(partiti.get(i), 1./(i+1.));
+					 } 
+					 break;
+				}
+				default:
+					LogHistory.getInstance().addLog(new LogElement(EsitoElezione.class, "getEsitoElezione", "Tipo elezione non supportato o Referendum", true) );
+					throw new IllegalStateException("Not expected this type of election: "+tipologiElezione);
+				}
+				
+			}
+		}
+		List<GenericVoto> votiCand = new ArrayList<GenericVoto>();
+		List<GenericVoto> votiPart = new ArrayList<GenericVoto>();
+		for (Map.Entry<Candidato, Double> elemento : votiCandidati.entrySet()) {
+			votiCand.add(new GenericVoto(elemento.getKey().toString(), new DecimalFormat("##.#").format(elemento.getValue())));
+		}
+		for (Map.Entry<Partito, Double> elemento : votiPartiti.entrySet()) {
+			votiPart.add(new GenericVoto(elemento.getKey().getNome(), new DecimalFormat("##.#").format(elemento.getValue())));
+		}
+		votiCand.sort((x,y) -> x.getNumeroVoti().compareTo(y.getNumeroVoti()));
+		votiPart.sort((x,y) -> x.getNumeroVoti().compareTo(y.getNumeroVoti()));
+		Collections.reverse(votiCand);
+		Collections.reverse(votiPart);
+		return new EsitoElezione(schedeBianche, votiTotali, votiPart, votiCand, elezione);
+		
+	}
+	
 	public boolean getIsValid() {
-		return elezione.getMaggioranzaAssoluta()&&getNumeroSchedeBianche()>=(getNumeroSchedeTotali()/2);
+		if(elezione.getMaggioranzaAssoluta())
+			return getNumeroSchedeBianche()<=(getNumeroSchedeTotali()/2);
+		return true;
 	}
 
 	public List<GenericVoto> getVotiPartiti() {
