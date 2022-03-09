@@ -29,6 +29,7 @@ public class StartingPage extends Application {
 			Parent root = FXMLLoader.load(getClass().getResource(LogInViewController.RESOURCE));
 			primaryStage.setTitle(LogInViewController.TITOLO);
 			primaryStage.setScene(new Scene(root, LogInViewController.WIDTH, LogInViewController.HEIGTH));
+		    primaryStage.setResizable(false);
 			primaryStage.show();
 		}catch(Exception e) {
 	        e.printStackTrace();
