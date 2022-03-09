@@ -1,13 +1,14 @@
 package jUnitTests;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
 import daoModels.ElezioneVote;
 import useObject.baseElements.Candidato;

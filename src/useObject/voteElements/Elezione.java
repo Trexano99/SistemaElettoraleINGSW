@@ -1,13 +1,11 @@
 package useObject.voteElements;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import daoModels.DbTablesRapresentation.Elezione_TB;
 import daoModels.ImplTablesDao.ElezioneDao;
 import daoModels.ImplTablesDao.VotazioneDao;
-import useObject.baseElements.Candidato;
 
 public class Elezione extends Votazione {
 	
