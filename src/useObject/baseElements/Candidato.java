@@ -28,6 +28,7 @@ public class Candidato {
 	}
 
 
+
 	public int getId() {
 		return id;
 	}
@@ -64,6 +65,14 @@ public class Candidato {
 					candidato.getDataNascita()));
 		}		
 		return listaCandidati;
+	}
+
+	/*
+	 * METODO STATICO PER IL SOLO SCOPO DI TESTING!
+	 * NON UTILIZZARE AL DI FUORI DEL PACKAGE JUNIT
+	 */
+	public static Candidato createCandidatoForTestingJUNIT(int id, String nome, String cognome, Date dataNascita) {
+		return new Candidato(id, nome, cognome, dataNascita);
 	}
 
 

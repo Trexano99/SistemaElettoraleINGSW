@@ -1,11 +1,13 @@
 package useObject.voteElements;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
 import daoModels.DbTablesRapresentation.Elezione_TB;
 import daoModels.ImplTablesDao.ElezioneDao;
 import daoModels.ImplTablesDao.VotazioneDao;
+import useObject.baseElements.Candidato;
 
 public class Elezione extends Votazione {
 	
@@ -40,5 +42,13 @@ public class Elezione extends Votazione {
 		
 	}
 	
+	/*
+	 * METODO STATICO PER IL SOLO SCOPO DI TESTING!
+	 * NON UTILIZZARE AL DI FUORI DEL PACKAGE JUNIT
+	 */
+	public static Elezione createElezioneForTestingJUNIT(int id, String nome, boolean isClosed, boolean isFinished, TipologiaElezione tipoElezione,
+			Boolean maggioranzaAssoluta) {
+		return new Elezione(id, nome, isClosed, isFinished, tipoElezione, maggioranzaAssoluta);
+	}
 		
 }

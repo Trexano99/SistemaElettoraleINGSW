@@ -1,5 +1,6 @@
 package useObject.baseElements;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -56,6 +57,13 @@ public class Partito {
 			
 		}		
 		return listaPartiti;
+	}
+	/*
+	 * METODO STATICO PER IL SOLO SCOPO DI TESTING!
+	 * NON UTILIZZARE AL DI FUORI DEL PACKAGE JUNIT
+	 */
+	public static Partito createPartitoForTestingJUNIT(int id, String nome) {
+		return new Partito(id, nome);
 	}
 	
 	
