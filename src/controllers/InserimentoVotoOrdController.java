@@ -37,12 +37,12 @@ public class InserimentoVotoOrdController implements IVoteController {
 		if(partiti!=null && partiti.size()> 0) {
 			strB.append("Confermare di star votando i seguenti partiti nel rispettivo ordine: ");
 			for(int i = 0; i < partiti.size(); i++) 
-				strB.append("\n"+i+") "+partiti.get(i).toString());
+				strB.append("\n"+(i+1)+") "+partiti.get(i).toString());
 		}
 		if(candidati!=null && candidati.size()>0) {
 			strB.append("\nConfermare di star votando i seguenti candidati nel rispettivo ordine: ");
 			for(int i = 0; i < candidati.size(); i++) 
-				strB.append("\n"+i+") "+candidati.get(i).toString());
+				strB.append("\n"+(i+1)+") "+candidati.get(i).toString());
 		}
 		if(viewContr.chiediConferma("Confermare il voto?", strB.toString())) {
 			registerVote(partiti, candidati);
